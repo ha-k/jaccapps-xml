@@ -1,0 +1,70 @@
+// FILE. . . . . /home/hak/hlt/src/hlt/language/jaccapps/xml/sources/ParserCode.grm
+// EDIT BY . . . Hassan Ait-Kaci
+// ON MACHINE. . Hp-Dv7
+// STARTED ON. . Fri Oct 19 22:55:13 2012
+
+/**
+ * This file contains ancillary code used by the Jacc grammar in <a
+ * href="XmlGenEx.html"><tt>XmlGenEx.grm</tt></a>, which illustrates how
+ * to use Jacc for XML generation from the syntax of a language - in
+ * this case, a language of simple expressions.
+ *
+ * <p>
+ *
+ * @version     Last modified on Fri Oct 19 23:10:42 2012 by hak
+ * @author      <a href="mahlto:hak@acm.org">Hassan A&iuml;t-Kaci</a>
+ * @copyright   &copy; <a href="http://www.hassan-ait-kaci.net/">by the author</a>
+ */
+
+%import java.io.PrintStream;
+%import hlt.language.tools.Misc;
+
+%{
+  long start;
+  boolean quiet = true;
+  PrintStream out = System.out;
+
+  void setStart ()
+    {
+      start = System.currentTimeMillis();
+    }
+
+  void setQuiet (boolean flag)
+    {
+      quiet = flag;
+    }
+
+  void setOutputStream (PrintStream stream)
+    {
+      out = stream;
+    }
+
+  /*
+   * A function to show what happened.
+   */
+  void showXml ()
+    {
+      out.println("*** Total parsing time = "
+                 +(System.currentTimeMillis()-start)
+                 +" ms");
+
+      if (!quiet)
+        {
+          errorManager().tallyErrors();
+          if (Misc.askYesNo("*** Do you want to see the XML serialization"))
+            {
+              out.println();
+	      try
+		{
+		  writeXml(currentNode(),System.out);
+		}
+	      catch (Exception e)
+		{
+		  e.printStackTrace();
+		}	      
+//               currentNode().display();
+              out.println();
+            }
+        }
+    }
+%}

@@ -1,0 +1,142 @@
+<HTML>
+<HEAD>
+<LINK REL="STYLESHEET" TYPE="text/css" HREF="style.css">
+<TITLE>
+Main Documentation for XmlGenEx.grm
+</TITLE>
+</HEAD>
+<BODY CLASS="MAIN"  LINK="BLUE" VLINK="BLUE" ALINK="PURPLE">
+<H1 ALIGN="CENTER">Main Documentation for grammar <SPAN STYLE="COLOR:MAROON">XmlGenEx.grm</SPAN></H1>
+<P><HR><P>
+<H4 ALIGN="CENTER">Description</H4>
+<TABLE WIDTH="100%" BGCOLOR="WHITE" CELLPADDING="15"><TR><TD>
+
+  This is a small grammar that used as an example to illustrate JACC's
+  XML serialization annotation mechanism. See also the annotated JACC
+  grammar's hilited <a href="index.html">source code</a> (<i>i.e.</i>,
+  an HTML-beautified rendering of the JACC source files where this
+  comment came from.
+ 
+  <p>
+ 
+  The file <a href="../../test/test.exp"><tt>test.exp</tt></a> contains
+  a set of expressions that can be parsed and serialized. The resulting
+  XML serialization of the example expression in that file can be seen
+  in the file <a href="../../test/test.trace"><tt>test.trace</tt></a>.
+  The "pure" XML serialization of the expressions in that file can be
+  seen in the file <a href="../../test/test.xml"><tt>test.xml</tt></a>.
+ 
+  <p>
+ 
+       
+<P>
+
+  This declares the Java package for the parser generated from this grammar
+  to be <font color="blue"><tt>hlt.xml</tt></font>.
+ 
+<P>
+
+  Include the ancillary java code contained in file <a
+  href="ParserCode.html">ParserCode.grm</a> for setting the generated
+  parser's parameters and showing XML serialization.
+ 
+<P>
+
+  This file contains ancillary code used by the Jacc grammar in <a
+  href="XmlGenEx.html"><tt>XmlGenEx.grm</tt></a>, which illustrates how
+  to use Jacc for XML generation from the syntax of a language - in
+  this case, a language of simple expressions.
+ 
+  <p>
+ 
+       
+<P>
+
+  Declare the grammar start symbol to be <tt><A CLASS="SYMBOL" HREF="XmlGenEx_NT_2.html" TARGET="MAIN" ONCLICK="opener.focus()"><B><TT><I>EXP</I></TT></B></A></tt>.
+ 
+<P>
+
+    This declares this application XML's namespace to be <font
+    color="green"><tt>http://www.hassan-ait-kaci.net/hex</tt></font>. This
+    is just a fake URI, of course, for the sake of this example
+    ("<tt><b>hex</b></tt>" stands for "<tt><u><b>h</b></u>lt
+    <u><b>e</b></u>xample <u><b>x</b></u>ml</tt>").
+   
+<P>
+
+    Define the XML tree root element to be a <font
+    color="green"><tt>hex:expressions</tt></font>.
+   
+<P>
+
+  Declare non-punctuation terminals <tt><A CLASS="SYMBOL" HREF="XmlGenEx_TT_04.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><B>NUMBER</B></TT></A></tt>,
+  <tt><A CLASS="SYMBOL" HREF="XmlGenEx_TT_05.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><B>IDENT</B></TT></A></tt>, and <tt><A CLASS="SYMBOL" HREF="XmlGenEx_TT_07.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><B>VAR</B></TT></A></tt>.  <b>NB</b>: <tt><A CLASS="SYMBOL" HREF="XmlGenEx_TT_07.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><B>VAR</B></TT></A></tt> is
+  an identifier starting with a <tt>'?'</tt> (<i>i.e.</i>, the
+  <tt>'?'</tt> is part of it, not a separate token).
+ 
+<P>
+
+  Declare operators from lowest to highest precedence.
+ 
+<P>
+
+  Annotate terminal symbol <tt><A CLASS="SYMBOL" HREF="XmlGenEx_TT_07.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><B>VAR</B></TT></A></tt> for XML serialization.
+ 
+<P>
+
+  Annotate terminal symbol <tt><A CLASS="SYMBOL" HREF="XmlGenEx_TT_05.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><B>IDENT</B></TT></A></tt> for XML serialization.
+ 
+<P>
+
+  Annotate terminal symbol <tt><A CLASS="SYMBOL" HREF="XmlGenEx_TT_06.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><B>STRING</B></TT></A></tt> for XML serialization.
+ 
+<P>
+
+  Annotate terminal symbol <tt><A CLASS="SYMBOL" HREF="XmlGenEx_TT_04.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><B>NUMBER</B></TT></A></tt> for XML serialization.
+ 
+<P>
+
+  Annotate terminal symbol <tt><A CLASS="SYMBOL" HREF="XmlGenEx_TT_13.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><B>PLUS</B></TT></A></tt> for XML serialization.
+ 
+<P>
+
+  Annotate terminal symbol <tt><A CLASS="SYMBOL" HREF="XmlGenEx_TT_14.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><B>TIMES</B></TT></A></tt> for XML serialization.
+ 
+<P>
+
+  Annotate terminal symbol <tt><A CLASS="SYMBOL" HREF="XmlGenEx_TT_10.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><B>SMALLER</B></TT></A></tt> for XML serialization.
+ 
+<P>
+
+  Annotate terminal symbol <tt><A CLASS="SYMBOL" HREF="XmlGenEx_TT_12.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><B>GREATER</B></TT></A></tt> for XML serialization.
+ 
+<P>
+
+  Annotate terminal symbol <tt><A CLASS="SYMBOL" HREF="XmlGenEx_TT_11.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><B>EQUAL</B></TT></A></tt> for XML serialization.
+ 
+<P>
+
+  Annotate terminal symbol <tt><A CLASS="SYMBOL" HREF="XmlGenEx_TT_09.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><B>AND</B></TT></A></tt> for XML serialization.
+ 
+<P>
+
+  Annotate terminal symbol <tt><A CLASS="SYMBOL" HREF="XmlGenEx_TT_08.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><B>OR</B></TT></A></tt> for XML serialization.
+ 
+<P>
+
+<DL>
+<DT><STRONG>Copyright:</STRONG></DT>
+<DD>&copy; <a href="http://www.hassan-ait-kaci.net/">by the author</a>, &copy; <a href="http://www.hassan-ait-kaci.net/">by the author</a></DD>
+<DT><STRONG>Author:</STRONG></DT>
+<DD><a href="mahlto:hak@acm.org">Hassan A&iuml;t-Kaci</a>, <a href="mahlto:hak@acm.org">Hassan A&iuml;t-Kaci</a></DD>
+<DT><STRONG>Version:</STRONG></DT>
+<DD>Last modified on Tue Jan 28 13:39:08 2014 by hak, Last modified on Fri Oct 19 23:10:42 2012 by hak</DD>
+</DL>
+</TD></TR></TABLE>
+<P>
+<HR>
+<SPAN STYLE="COLOR:#F07070; FONT-SIZE:XX-SMALL">
+<P ALIGN="RIGHT"><B>Copyright &copy; 2018 by <A HREF="http://www.hassan-ait-kaci.net/">Hassan A&iuml;t-Kaci</A>; All Rights Reserved.</B></SPAN>
+<P ALIGN="RIGHT"><IMG ALIGN="MIDDLE" SRC="images/hlt/hlt-logo.gif" WIDTH="90" HEIGHT="90">
+</BODY>
+</HTML>

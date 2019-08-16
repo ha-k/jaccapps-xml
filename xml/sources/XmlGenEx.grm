@@ -1,0 +1,331 @@
+//  FILE. . . . . /home/hak/hlt/src/hlt/language/jaccapps/xml/sources/XmlGenEx.grm
+//  EDIT BY . . . Hassan Ait-Kaci
+//  ON MACHINE. . Hp-Dv7
+//  STARTED ON. . Fri Oct 19 23:11:54 2012
+
+/**
+ * This is a small grammar that used as an example to illustrate JACC's
+ * XML serialization annotation mechanism. See also the annotated JACC
+ * grammar's hilited <a href="index.html">source code</a> (<i>i.e.</i>,
+ * an HTML-beautified rendering of the JACC source files where this
+ * comment came from.
+ *
+ * <p>
+ *
+ * The file <a href="../../test/test.exp"><tt>test.exp</tt></a> contains
+ * a set of expressions that can be parsed and serialized. The resulting
+ * XML serialization of the example expression in that file can be seen
+ * in the file <a href="../../test/test.trace"><tt>test.trace</tt></a>.
+ * The "pure" XML serialization of the expressions in that file can be
+ * seen in the file <a href="../../test/test.xml"><tt>test.xml</tt></a>.
+ *
+ * <p>
+ *
+ * @version     Last modified on Tue Jan 28 13:39:08 2014 by hak
+ * @author      <a href="mahlto:hak@acm.org">Hassan A&iuml;t-Kaci</a>
+ * @copyright   &copy; <a href="http://www.hassan-ait-kaci.net/">by the author</a>
+ */
+
+/* ************************************************************************ */
+/* ************************ PARAMETER DECLARATIONS ************************ */
+/* ************************************************************************ */
+
+/**
+ * This declares the Java package for the parser generated from this grammar
+ * to be <font color="blue"><tt>hlt.xml</tt></font>.
+ */
+%package hlt.xml;
+
+/**
+ * Include the ancillary java code contained in file <a
+ * href="ParserCode.html">ParserCode.grm</a> for setting the generated
+ * parser's parameters and showing XML serialization.
+ */
+%include ParserCode.grm
+
+/**
+ * Declare the grammar start symbol to be <tt>$EXP$</tt>.
+ */
+%start EXP
+
+  /**
+   * This declares this application XML's namespace to be <font
+   * color="green"><tt>http://www.hassan-ait-kaci.net/hex</tt></font>. This
+   * is just a fake URI, of course, for the sake of this example
+   * ("<tt><b>hex</b></tt>" stands for "<tt><u><b>h</b></u>lt
+   * <u><b>e</b></u>xample <u><b>x</b></u>ml</tt>").
+   */
+%xmlns "hex" "http://www.hassan-ait-kaci.net/hex"
+
+  /**
+   * Define the XML tree root element to be a <font
+   * color="green"><tt>hex:expressions</tt></font>.
+   */
+%xmlroot "hex" "expressions"
+
+/**
+ * Declare non-punctuation terminals <tt>$NUMBER$</tt>,
+ * <tt>$IDENT$</tt>, and <tt>$VAR$</tt>.  <b>NB</b>: <tt>$VAR$</tt> is
+ * an identifier starting with a <tt>'?'</tt> (<i>i.e.</i>, the
+ * <tt>'?'</tt> is part of it, not a separate token).
+ */
+%token NUMBER IDENT STRING VAR
+
+/**
+ * Declare operators from lowest to highest precedence.
+ */
+%left  OR
+%left  AND
+%token SMALLER EQUAL GREATER
+%left  PLUS
+%left  TIMES
+
+/* ************************************************************************ */
+/* ***** ANNOTATION SPECIFICATION FOR THE GRAMMAR'S TERMINAL SYMBOLS  ***** */
+/* ************************************************************************ */
+
+/**
+ * Annotate terminal symbol <tt>$VAR$</tt> for XML serialization.
+ */
+%xmlinfo VAR [ NS:"hex" LO:"variable" AT:{name = $value} ]
+
+/**
+ * Annotate terminal symbol <tt>$IDENT$</tt> for XML serialization.
+ */
+%xmlinfo IDENT [ NS:"hex" LO:"identifier" AT:{name = $value} ]
+
+/**
+ * Annotate terminal symbol <tt>$STRING$</tt> for XML serialization.
+ */
+%xmlinfo STRING [ NS:"hex" LO:"string" AT:{value = $value} ]
+
+/**
+ * Annotate terminal symbol <tt>$NUMBER$</tt> for XML serialization.
+ */
+%xmlinfo NUMBER [ NS:"hex" LO:"number" AT:{value = $value} ]
+
+/**
+ * Annotate terminal symbol <tt>$PLUS$</tt> for XML serialization.
+ */
+%xmlinfo PLUS [ NS:"hex" LO:"ArithmeticOperator" AT:{symbol = "+"} ]
+
+/**
+ * Annotate terminal symbol <tt>$TIMES$</tt> for XML serialization.
+ */
+%xmlinfo TIMES [ NS:"hex" LO:"ArithmeticOperator" AT:{symbol = "*"} ]
+
+/**
+ * Annotate terminal symbol <tt>$SMALLER$</tt> for XML serialization.
+ */
+%xmlinfo SMALLER [ NS:"hex" LO:"RelationalOperator" AT:{symbol = "<"} ]
+
+/**
+ * Annotate terminal symbol <tt>$GREATER$</tt> for XML serialization.
+ */
+%xmlinfo GREATER [ NS:"hex" LO:"RelationalOperator" AT:{symbol = ">"} ]
+
+/**
+ * Annotate terminal symbol <tt>$EQUAL$</tt> for XML serialization.
+ */
+%xmlinfo EQUAL [ NS:"hex" LO:"RelationalOperator" AT:{symbol = "="} ]
+
+/**
+ * Annotate terminal symbol <tt>$AND$</tt> for XML serialization.
+ */
+%xmlinfo AND [ NS:"hex" LO:"BooleanOperator" AT:{symbol = "&"} ]
+
+/**
+ * Annotate terminal symbol <tt>$OR$</tt> for XML serialization.
+ */
+%xmlinfo OR [ NS:"hex" LO:"BooleanOperator" AT:{symbol = "|"} ]
+
+%% 
+
+/* ************************************************************************ */
+/* ******* ANNOTATED GRAMMAR RULES FOR A SIMPLE EXPRESSION LANGUAGE ******* */
+/* ************************************************************************ */
+
+/**
+ * This grammar's root is the nonterminal symbol <tt>EXP</tt>.
+ */
+EXP
+  : Exprs
+  {
+    // show the XML tree
+    showXml();
+    // show the CST:
+//     System.out.println("Concrete syntax tree:\n");
+//     currentNode().show(2,System.out);
+  }
+  ;
+
+/**
+ * An <tt>Exprs</tt> is a possibly empty sequence of items, each
+ * consisting of an <tt>$Expr$</tt>'s followed by a <tt>'$;$'</tt>.
+ */
+Exprs
+  : /* empty */
+  | Exprs Expr ';'
+ ;
+
+/**
+ * An <tt>Expr</tt> is either an <tt>$Atom$</tt> or
+ * a <tt>$BinExpr$</tt>.
+ */
+Expr
+  : Atom
+  | BinExpr
+  ;
+
+/**
+ * An <tt>Atom</tt> is either a <tt>$NUMBER$</tt>, an <tt>$IDENT$</tt>,
+ * a <tt>$STRING$</tt>, or a <tt>$VAR$</tt>.
+ */
+Atom
+  : NUMBER
+  | IDENT
+  | STRING
+  | VAR
+  ;
+
+/**
+ * A <tt>BinExpr</tt> either one of:
+ * <ul>
+ * <li> an <tt>$Expr$</tt> followed by a binary operator (<i>i.e.</i>,
+ *      one of <tt>$PLUS$</tt>, <tt>$TIMES$</tt>, <tt>$AND$</tt>, or
+ *      <tt>$OR$</tt>), followed by an <tt>$Expr$</tt>;
+ * <li> an <tt>$Expr$</tt> followed by a <tt>$PartialRelationalExpr$</tt>.
+ *</ul>
+ */
+BinExpr
+  : Expr PLUS Expr
+  /**
+   * A <tt>BinExpr</tt> is an <tt>$Expr$</tt> followed by the binary
+   * operator <tt>$PLUS$</tt> followed by an <tt>$Expr$</tt>.
+   */
+  [
+    NS:"hex"
+    LO:"BinaryArithmeticExpression"
+    AT:{op = 2/symbol}
+    CH:(1 3)
+  ]
+  |
+  /**
+   * A <tt>BinExpr</tt> is an <tt>$Expr$</tt> followed by the binary
+   * operator <tt>$TIMES$</tt> followed by an <tt>$Expr$</tt>.
+   */
+    Expr TIMES Expr
+  [
+    NS:"hex"
+    LO:"BinaryArithmeticExpression"
+    AT:{op = 2/symbol}
+    CH:(1 3)
+  ]
+  |
+  /**
+   * A <tt>BinExpr</tt> is an <tt>$Expr$</tt> followed by the binary
+   * operator <tt>$AND$</tt> followed by an <tt>$Expr$</tt>.
+   */
+    Expr AND Expr
+  [
+    NS:"hex"
+    LO:"BinaryBooleanExpression"
+    AT:{op = 2/symbol}
+    CH:(1 3)
+  ]
+  |
+  /**
+   * A <tt>BinExpr</tt> is an <tt>$Expr$</tt> followed by the binary
+   * operator <tt>$OR$</tt> followed by an <tt>$Expr$</tt>.
+   */
+    Expr OR Expr
+  [
+    NS:"hex"
+    LO:"BinaryBooleanExpression"
+    AT:{op = 2/symbol}
+    CH:(1 3)
+  ]
+  | Expr PartialRelationalExpr
+  /**
+   * A <tt>BinExpr</tt> is an <tt>$Expr$</tt> followed by a
+   * <tt>$PartialRelationalExpr$</tt>.
+   */
+  [
+    NS:"hex"
+    LO:"BinaryRelationalExpression"
+    AT:{op = 2/op}
+    CH:(1 2[1])
+  ]
+  // Possible alternative (prefix) - if also modifying the annotation for
+  // PartialRelationalExpr accordingly:
+  //   [
+  //     NS:"hex"
+  //     LO:"BinaryExpression"
+  //     CH:(2[1] 1 2[2])
+  //   ]
+  ;
+
+/**
+ * A <tt>PartialRelationalExpr</tt> consists of a relational operator
+ * (<i>i.e.</i>, one of <tt>$SMALLER$</tt>, <tt>$EQUAL$</tt>, or
+ * <tt>$GREATER$</tt>) followed by an <tt>$Expr$</tt>.
+ */
+PartialRelationalExpr
+//   : RelOp Expr
+  : SMALLER Expr
+  [
+    NS:"hex"
+    LO:"PartialRelationalExpression"
+    AT:{op = 1/symbol}
+    CH:(2)
+  ]
+  | EQUAL Expr
+  [
+    NS:"hex"
+    LO:"PartialRelationalExpression"
+    AT:{op = 1/symbol}
+    CH:(2)
+  ]
+  | GREATER Expr
+  [
+    NS:"hex"
+    LO:"PartialRelationalExpression"
+    AT:{op = 1/symbol}
+    CH:(2)
+  ]
+  // Possible alternative (prefix) - if also modifying the annotation for
+  // BinExpr accordingly:
+  //   [
+  //     NS:"hex"
+  //     LO:"PartialRelationalExpression"
+  //     CH:(1 2)
+  //   ]
+  ;
+
+  // /**
+  //  * A <tt>BinOp</tt> is one of <tt>$PLUS$</tt>, <tt>$TIMES$</tt>,
+  //  * <tt>$AND$</tt>, or <tt>$OR$</tt>.
+  //  */
+  // BinOp
+  //   : PLUS
+  //   | TIMES
+  //   | AND
+  //   | OR
+  //   ;
+  
+  // /**
+  //  * A <tt>RelOp</tt> is one of <tt>$SMALLER$</tt>, <tt>$EQUAL$</tt>,
+  //  * or <tt>$GREATER$</tt>.
+  //  */
+  // RelOp
+  //   : SMALLER
+  //   | EQUAL
+  //   | GREATER
+  //   ;
+  
+%%
+
+/* ************************************************************************ */
+/* ********************* END OF GRAMMAR XmlGenEx.grm ********************** */
+/* ************************************************************************ */
+

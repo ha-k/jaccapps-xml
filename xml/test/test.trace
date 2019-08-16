@@ -1,0 +1,40 @@
+(hak) 290> test test.exp
+*** Parsing file: test.exp
+*** Total parsing time = 8 ms
+*** There are no errors
+*** Do you want to see the XML serialization? (y/n) [y] > 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<hex:expressions xmlns:hex="http://www.hassan-ait-kaci.net/hex">
+  <hex:BinaryArithmeticExpression op="+">
+    <hex:BinaryArithmeticExpression op="+">
+      <hex:number value="1" />
+      <hex:number value="2" />
+    </hex:BinaryArithmeticExpression>
+    <hex:number value="3" />
+  </hex:BinaryArithmeticExpression>
+  <hex:BinaryRelationalExpression op="&gt;">
+    <hex:BinaryArithmeticExpression op="+">
+      <hex:BinaryArithmeticExpression op="*">
+        <hex:identifier name="a" />
+        <hex:identifier name="b" />
+      </hex:BinaryArithmeticExpression>
+      <hex:BinaryArithmeticExpression op="*">
+        <hex:identifier name="c" />
+        <hex:identifier name="d" />
+      </hex:BinaryArithmeticExpression>
+    </hex:BinaryArithmeticExpression>
+    <hex:number value="1" />
+  </hex:BinaryRelationalExpression>
+  <hex:BinaryBooleanExpression op="&amp;">
+    <hex:BinaryRelationalExpression op="&lt;">
+      <hex:number value="0" />
+      <hex:identifier name="a" />
+    </hex:BinaryRelationalExpression>
+    <hex:BinaryRelationalExpression op="=">
+      <hex:identifier name="b" />
+      <hex:number value="4" />
+    </hex:BinaryRelationalExpression>
+  </hex:BinaryBooleanExpression>
+</hex:expressions>
+<!--XML document generated on Fri Oct 19 17:44:17 PDT 2012-->

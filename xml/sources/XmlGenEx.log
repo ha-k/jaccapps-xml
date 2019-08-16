@@ -1,0 +1,977 @@
+*** This is Jacc: Just another compiler compiler... 
+*** Run of Mon Mar 26 09:39:43 CEST 2018
+*** Reading grammar in file ./sources/XmlGenEx.grm ... 
+*** Including file ./sources\ParserCode.grm ...
+*** Defining XML namespace prefix: hex = "http://www.hassan-ait-kaci.net/hex"
+*** Setting XML root's namespace to hex
+*** Setting XML root to hex:expressions
+***	... in 51 ms
+
+RULES:
+
+[0]	$START$ --> $ROOTS$
+	precedence = 1
+[1]	$ROOTS$ --> EXP
+	precedence = 1
+[2]	$ROOTS$ --> '$EXP_switch$' EXP
+	precedence = 1
+[3]	EXP --> Exprs
+	precedence = 1
+[4]	Exprs -->
+	precedence = 1
+[5]	Exprs --> Exprs Expr ';'
+	precedence = 1
+[6]	Expr --> Atom
+	precedence = 1
+[7]	Expr --> BinExpr
+	precedence = 1
+[8]	Atom --> 'NUMBER'
+	precedence = 1
+[9]	Atom --> 'IDENT'
+	precedence = 1
+[10]	Atom --> 'STRING'
+	precedence = 1
+[11]	Atom --> 'VAR'
+	precedence = 1
+[12]	BinExpr --> Expr 'PLUS' Expr
+	precedence = 41
+	XML form = [ nsprefix = "hex" localname = "BinaryArithmeticExpression" attributes = { op = 2/symbol } children = ( 1 3 ) ]
+[13]	BinExpr --> Expr 'TIMES' Expr
+	precedence = 51
+	XML form = [ nsprefix = "hex" localname = "BinaryArithmeticExpression" attributes = { op = 2/symbol } children = ( 1 3 ) ]
+[14]	BinExpr --> Expr 'AND' Expr
+	precedence = 21
+	XML form = [ nsprefix = "hex" localname = "BinaryBooleanExpression" attributes = { op = 2/symbol } children = ( 1 3 ) ]
+[15]	BinExpr --> Expr 'OR' Expr
+	precedence = 11
+	XML form = [ nsprefix = "hex" localname = "BinaryBooleanExpression" attributes = { op = 2/symbol } children = ( 1 3 ) ]
+[16]	BinExpr --> Expr PartialRelationalExpr
+	precedence = 1
+	XML form = [ nsprefix = "hex" localname = "BinaryRelationalExpression" attributes = { op = 2/op } children = ( 1 2[1] ) ]
+[17]	PartialRelationalExpr --> 'SMALLER' Expr
+	precedence = 31
+	XML form = [ nsprefix = "hex" localname = "PartialRelationalExpression" attributes = { op = 1/symbol } children = ( 2 ) ]
+[18]	PartialRelationalExpr --> 'EQUAL' Expr
+	precedence = 31
+	XML form = [ nsprefix = "hex" localname = "PartialRelationalExpression" attributes = { op = 1/symbol } children = ( 2 ) ]
+[19]	PartialRelationalExpr --> 'GREATER' Expr
+	precedence = 31
+	XML form = [ nsprefix = "hex" localname = "PartialRelationalExpression" attributes = { op = 1/symbol } children = ( 2 ) ]
+
+*** Starting grammar analysis ... 
+***	Preprocessing the grammar ... 
+***	... in 2 ms
+
+TERMINALS:
+
+	----------	-------------	--------
+	PRECEDENCE	ASSOCIATIVITY	TERMINAL
+	----------	-------------	--------
+[0]	1		none		'$EMPTY$'
+[1]	1		none		'$E_O_I$'
+[2]	1		none		'error'
+[3]	1		none		'$EXP_switch$'
+[4]	1		none		'NUMBER'
+[5]	1		none		'IDENT'
+[6]	1		none		'STRING'
+[7]	1		none		'VAR'
+[8]	11		left		'OR'
+[9]	21		left		'AND'
+[10]	31		none		'SMALLER'
+[11]	31		none		'EQUAL'
+[12]	31		none		'GREATER'
+[13]	41		left		'PLUS'
+[14]	51		left		'TIMES'
+[15]	1		none		';'
+	----------------------------------------
+
+NON TERMINALS:
+
+  [0]	$START$	(nullable)
+	FIRST:	 {'$EXP_switch$', 'NUMBER', 'IDENT', 'STRING', 'VAR'}
+	LSet:	 {$START$, $ROOTS$, EXP, Exprs}
+
+  [1]	$ROOTS$	(nullable)
+	FIRST:	 {'$EXP_switch$', 'NUMBER', 'IDENT', 'STRING', 'VAR'}
+	LSet:	 {$ROOTS$, EXP, Exprs}
+
+  [2]	EXP	(nullable)
+	FIRST:	 {'NUMBER', 'IDENT', 'STRING', 'VAR'}
+	LSet:	 {EXP, Exprs}
+
+  [3]	Exprs	(nullable)
+	FIRST:	 {'NUMBER', 'IDENT', 'STRING', 'VAR'}
+	LSet:	 {Exprs}
+
+  [4]	Expr
+	FIRST:	 {'NUMBER', 'IDENT', 'STRING', 'VAR'}
+	LSet:	 {Expr, Atom, BinExpr}
+
+  [5]	Atom
+	FIRST:	 {'NUMBER', 'IDENT', 'STRING', 'VAR'}
+	LSet:	 {Atom}
+
+  [6]	BinExpr
+	FIRST:	 {'NUMBER', 'IDENT', 'STRING', 'VAR'}
+	LSet:	 {Expr, Atom, BinExpr}
+
+  [7]	PartialRelationalExpr
+	FIRST:	 {'SMALLER', 'EQUAL', 'GREATER'}
+	LSet:	 {PartialRelationalExpr}
+
+
+***	Building canonical LR states ... 
+***	 ... in 9 ms
+***	Propagating lookahead symbols ... 
+***	 ... in 1 ms
+*** Grammar analysis completed in 13 ms.
+*** Building parsing tables ... 
+*** Unresolved S/R conflict: choosing S18	over R19,	in state 21, 	on input 'SMALLER'
+*** Unresolved S/R conflict: choosing S19	over R19,	in state 21, 	on input 'EQUAL'
+!!! WARNING: Rule 19 may compose the non-associative symbol: 'GREATER'
+*** Unresolved S/R conflict: choosing S18	over R18,	in state 22, 	on input 'SMALLER'
+!!! WARNING: Rule 18 may compose the non-associative symbol: 'EQUAL'
+*** Unresolved S/R conflict: choosing S20	over R18,	in state 22, 	on input 'GREATER'
+!!! WARNING: Rule 17 may compose the non-associative symbol: 'SMALLER'
+*** Unresolved S/R conflict: choosing S19	over R17,	in state 23, 	on input 'EQUAL'
+*** Unresolved S/R conflict: choosing S20	over R17,	in state 23, 	on input 'GREATER'
+***	... in 1 ms
+
+
+
+=============================
+STATE NUMBER: 0
+=============================
+[0] $START$ --> . $ROOTS$
+	Preceding states: {0}
+	Follow set: {'$E_O_I$'}
+	Preceding states: {0}
+[1] $ROOTS$ --> . EXP
+	Preceding states: {0}
+[2] $ROOTS$ --> . '$EXP_switch$' EXP
+	Preceding states: {0}
+[3] EXP --> . Exprs
+	Preceding states: {0}
+[4] Exprs --> .
+	Preceding states: {0}
+	Lookahead set: {'$E_O_I$', 'NUMBER', 'IDENT', 'STRING', 'VAR'}
+[5] Exprs --> . Exprs Expr ';'
+	Preceding states: {0}
+-----------------------------
+With $ROOTS$, go to state 1
+With EXP, go to state 2
+With '$EXP_switch$', go to state 3
+With Exprs, go to state 4
+
+=============================
+STATE NUMBER: 1
+=============================
+[0] $START$ --> $ROOTS$ .
+	Preceding states: {0}
+	Lookahead set: {}
+-----------------------------
+
+=============================
+STATE NUMBER: 2
+=============================
+[1] $ROOTS$ --> EXP .
+	Preceding states: {0}
+	Lookahead set: {'$E_O_I$'}
+-----------------------------
+
+=============================
+STATE NUMBER: 3
+=============================
+[2] $ROOTS$ --> '$EXP_switch$' . EXP
+	Preceding states: {0}
+	Follow set: {'$E_O_I$'}
+[3] EXP --> . Exprs
+	Preceding states: {3}
+[4] Exprs --> .
+	Preceding states: {3}
+	Lookahead set: {'$E_O_I$', 'NUMBER', 'IDENT', 'STRING', 'VAR'}
+[5] Exprs --> . Exprs Expr ';'
+	Preceding states: {3}
+-----------------------------
+With EXP, go to state 28
+With Exprs, go to state 4
+
+=============================
+STATE NUMBER: 4
+=============================
+[3] EXP --> Exprs .
+	Preceding states: {0, 3}
+	Lookahead set: {'$E_O_I$'}
+[5] Exprs --> Exprs . Expr ';'
+	Preceding states: {0, 3}
+	Follow set: {';'}
+[6] Expr --> . Atom
+	Preceding states: {4}
+[7] Expr --> . BinExpr
+	Preceding states: {4}
+[8] Atom --> . 'NUMBER'
+	Preceding states: {4}
+[9] Atom --> . 'IDENT'
+	Preceding states: {4}
+[10] Atom --> . 'STRING'
+	Preceding states: {4}
+[11] Atom --> . 'VAR'
+	Preceding states: {4}
+[12] BinExpr --> . Expr 'PLUS' Expr
+	Preceding states: {4}
+[13] BinExpr --> . Expr 'TIMES' Expr
+	Preceding states: {4}
+[14] BinExpr --> . Expr 'AND' Expr
+	Preceding states: {4}
+[15] BinExpr --> . Expr 'OR' Expr
+	Preceding states: {4}
+[16] BinExpr --> . Expr PartialRelationalExpr
+	Preceding states: {4}
+-----------------------------
+With Expr, go to state 5
+With Atom, go to state 6
+With BinExpr, go to state 7
+With 'NUMBER', go to state 8
+With 'IDENT', go to state 9
+With 'STRING', go to state 10
+With 'VAR', go to state 11
+
+=============================
+STATE NUMBER: 5
+=============================
+[5] Exprs --> Exprs Expr . ';'
+	Preceding states: {0, 3}
+[12] BinExpr --> Expr . 'PLUS' Expr
+	Preceding states: {4}
+[13] BinExpr --> Expr . 'TIMES' Expr
+	Preceding states: {4}
+[14] BinExpr --> Expr . 'AND' Expr
+	Preceding states: {4}
+[15] BinExpr --> Expr . 'OR' Expr
+	Preceding states: {4}
+[16] BinExpr --> Expr . PartialRelationalExpr
+	Preceding states: {4}
+	Follow set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+[17] PartialRelationalExpr --> . 'SMALLER' Expr
+	Preceding states: {5}
+[18] PartialRelationalExpr --> . 'EQUAL' Expr
+	Preceding states: {5}
+[19] PartialRelationalExpr --> . 'GREATER' Expr
+	Preceding states: {5}
+-----------------------------
+With ';', go to state 12
+With 'PLUS', go to state 13
+With 'TIMES', go to state 14
+With 'AND', go to state 15
+With 'OR', go to state 16
+With PartialRelationalExpr, go to state 17
+With 'SMALLER', go to state 18
+With 'EQUAL', go to state 19
+With 'GREATER', go to state 20
+
+=============================
+STATE NUMBER: 6
+=============================
+[6] Expr --> Atom .
+	Preceding states: {4, 13, 14, 15, 16, 18, 19, 20}
+	Lookahead set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+-----------------------------
+
+=============================
+STATE NUMBER: 7
+=============================
+[7] Expr --> BinExpr .
+	Preceding states: {4, 13, 14, 15, 16, 18, 19, 20}
+	Lookahead set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+-----------------------------
+
+=============================
+STATE NUMBER: 8
+=============================
+[8] Atom --> 'NUMBER' .
+	Preceding states: {4, 13, 14, 15, 16, 18, 19, 20}
+	Lookahead set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+-----------------------------
+
+=============================
+STATE NUMBER: 9
+=============================
+[9] Atom --> 'IDENT' .
+	Preceding states: {4, 13, 14, 15, 16, 18, 19, 20}
+	Lookahead set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+-----------------------------
+
+=============================
+STATE NUMBER: 10
+=============================
+[10] Atom --> 'STRING' .
+	Preceding states: {4, 13, 14, 15, 16, 18, 19, 20}
+	Lookahead set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+-----------------------------
+
+=============================
+STATE NUMBER: 11
+=============================
+[11] Atom --> 'VAR' .
+	Preceding states: {4, 13, 14, 15, 16, 18, 19, 20}
+	Lookahead set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+-----------------------------
+
+=============================
+STATE NUMBER: 12
+=============================
+[5] Exprs --> Exprs Expr ';' .
+	Preceding states: {0, 3}
+	Lookahead set: {'$E_O_I$', 'NUMBER', 'IDENT', 'STRING', 'VAR'}
+-----------------------------
+
+=============================
+STATE NUMBER: 13
+=============================
+[6] Expr --> . Atom
+	Preceding states: {13}
+[7] Expr --> . BinExpr
+	Preceding states: {13}
+[8] Atom --> . 'NUMBER'
+	Preceding states: {13}
+[9] Atom --> . 'IDENT'
+	Preceding states: {13}
+[10] Atom --> . 'STRING'
+	Preceding states: {13}
+[11] Atom --> . 'VAR'
+	Preceding states: {13}
+[12] BinExpr --> . Expr 'PLUS' Expr
+	Preceding states: {13}
+[12] BinExpr --> Expr 'PLUS' . Expr
+	Preceding states: {4, 13, 14, 15, 16, 18, 19, 20}
+	Follow set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+[13] BinExpr --> . Expr 'TIMES' Expr
+	Preceding states: {13}
+[14] BinExpr --> . Expr 'AND' Expr
+	Preceding states: {13}
+[15] BinExpr --> . Expr 'OR' Expr
+	Preceding states: {13}
+[16] BinExpr --> . Expr PartialRelationalExpr
+	Preceding states: {13}
+-----------------------------
+With Expr, go to state 27
+With Atom, go to state 6
+With BinExpr, go to state 7
+With 'NUMBER', go to state 8
+With 'IDENT', go to state 9
+With 'STRING', go to state 10
+With 'VAR', go to state 11
+
+=============================
+STATE NUMBER: 14
+=============================
+[6] Expr --> . Atom
+	Preceding states: {14}
+[7] Expr --> . BinExpr
+	Preceding states: {14}
+[8] Atom --> . 'NUMBER'
+	Preceding states: {14}
+[9] Atom --> . 'IDENT'
+	Preceding states: {14}
+[10] Atom --> . 'STRING'
+	Preceding states: {14}
+[11] Atom --> . 'VAR'
+	Preceding states: {14}
+[12] BinExpr --> . Expr 'PLUS' Expr
+	Preceding states: {14}
+[13] BinExpr --> . Expr 'TIMES' Expr
+	Preceding states: {14}
+[13] BinExpr --> Expr 'TIMES' . Expr
+	Preceding states: {4, 13, 14, 15, 16, 18, 19, 20}
+	Follow set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+[14] BinExpr --> . Expr 'AND' Expr
+	Preceding states: {14}
+[15] BinExpr --> . Expr 'OR' Expr
+	Preceding states: {14}
+[16] BinExpr --> . Expr PartialRelationalExpr
+	Preceding states: {14}
+-----------------------------
+With Expr, go to state 26
+With Atom, go to state 6
+With BinExpr, go to state 7
+With 'NUMBER', go to state 8
+With 'IDENT', go to state 9
+With 'STRING', go to state 10
+With 'VAR', go to state 11
+
+=============================
+STATE NUMBER: 15
+=============================
+[6] Expr --> . Atom
+	Preceding states: {15}
+[7] Expr --> . BinExpr
+	Preceding states: {15}
+[8] Atom --> . 'NUMBER'
+	Preceding states: {15}
+[9] Atom --> . 'IDENT'
+	Preceding states: {15}
+[10] Atom --> . 'STRING'
+	Preceding states: {15}
+[11] Atom --> . 'VAR'
+	Preceding states: {15}
+[12] BinExpr --> . Expr 'PLUS' Expr
+	Preceding states: {15}
+[13] BinExpr --> . Expr 'TIMES' Expr
+	Preceding states: {15}
+[14] BinExpr --> . Expr 'AND' Expr
+	Preceding states: {15}
+[14] BinExpr --> Expr 'AND' . Expr
+	Preceding states: {4, 13, 14, 15, 16, 18, 19, 20}
+	Follow set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+[15] BinExpr --> . Expr 'OR' Expr
+	Preceding states: {15}
+[16] BinExpr --> . Expr PartialRelationalExpr
+	Preceding states: {15}
+-----------------------------
+With Expr, go to state 25
+With Atom, go to state 6
+With BinExpr, go to state 7
+With 'NUMBER', go to state 8
+With 'IDENT', go to state 9
+With 'STRING', go to state 10
+With 'VAR', go to state 11
+
+=============================
+STATE NUMBER: 16
+=============================
+[6] Expr --> . Atom
+	Preceding states: {16}
+[7] Expr --> . BinExpr
+	Preceding states: {16}
+[8] Atom --> . 'NUMBER'
+	Preceding states: {16}
+[9] Atom --> . 'IDENT'
+	Preceding states: {16}
+[10] Atom --> . 'STRING'
+	Preceding states: {16}
+[11] Atom --> . 'VAR'
+	Preceding states: {16}
+[12] BinExpr --> . Expr 'PLUS' Expr
+	Preceding states: {16}
+[13] BinExpr --> . Expr 'TIMES' Expr
+	Preceding states: {16}
+[14] BinExpr --> . Expr 'AND' Expr
+	Preceding states: {16}
+[15] BinExpr --> . Expr 'OR' Expr
+	Preceding states: {16}
+[15] BinExpr --> Expr 'OR' . Expr
+	Preceding states: {4, 13, 14, 15, 16, 18, 19, 20}
+	Follow set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+[16] BinExpr --> . Expr PartialRelationalExpr
+	Preceding states: {16}
+-----------------------------
+With Expr, go to state 24
+With Atom, go to state 6
+With BinExpr, go to state 7
+With 'NUMBER', go to state 8
+With 'IDENT', go to state 9
+With 'STRING', go to state 10
+With 'VAR', go to state 11
+
+=============================
+STATE NUMBER: 17
+=============================
+[16] BinExpr --> Expr PartialRelationalExpr .
+	Preceding states: {4, 13, 14, 15, 16, 18, 19, 20}
+	Lookahead set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+-----------------------------
+
+=============================
+STATE NUMBER: 18
+=============================
+[6] Expr --> . Atom
+	Preceding states: {18}
+[7] Expr --> . BinExpr
+	Preceding states: {18}
+[8] Atom --> . 'NUMBER'
+	Preceding states: {18}
+[9] Atom --> . 'IDENT'
+	Preceding states: {18}
+[10] Atom --> . 'STRING'
+	Preceding states: {18}
+[11] Atom --> . 'VAR'
+	Preceding states: {18}
+[12] BinExpr --> . Expr 'PLUS' Expr
+	Preceding states: {18}
+[13] BinExpr --> . Expr 'TIMES' Expr
+	Preceding states: {18}
+[14] BinExpr --> . Expr 'AND' Expr
+	Preceding states: {18}
+[15] BinExpr --> . Expr 'OR' Expr
+	Preceding states: {18}
+[16] BinExpr --> . Expr PartialRelationalExpr
+	Preceding states: {18}
+[17] PartialRelationalExpr --> 'SMALLER' . Expr
+	Preceding states: {5, 21, 22, 23, 24, 25, 26, 27}
+	Follow set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+-----------------------------
+With Expr, go to state 23
+With Atom, go to state 6
+With BinExpr, go to state 7
+With 'NUMBER', go to state 8
+With 'IDENT', go to state 9
+With 'STRING', go to state 10
+With 'VAR', go to state 11
+
+=============================
+STATE NUMBER: 19
+=============================
+[6] Expr --> . Atom
+	Preceding states: {19}
+[7] Expr --> . BinExpr
+	Preceding states: {19}
+[8] Atom --> . 'NUMBER'
+	Preceding states: {19}
+[9] Atom --> . 'IDENT'
+	Preceding states: {19}
+[10] Atom --> . 'STRING'
+	Preceding states: {19}
+[11] Atom --> . 'VAR'
+	Preceding states: {19}
+[12] BinExpr --> . Expr 'PLUS' Expr
+	Preceding states: {19}
+[13] BinExpr --> . Expr 'TIMES' Expr
+	Preceding states: {19}
+[14] BinExpr --> . Expr 'AND' Expr
+	Preceding states: {19}
+[15] BinExpr --> . Expr 'OR' Expr
+	Preceding states: {19}
+[16] BinExpr --> . Expr PartialRelationalExpr
+	Preceding states: {19}
+[18] PartialRelationalExpr --> 'EQUAL' . Expr
+	Preceding states: {5, 21, 22, 23, 24, 25, 26, 27}
+	Follow set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+-----------------------------
+With Expr, go to state 22
+With Atom, go to state 6
+With BinExpr, go to state 7
+With 'NUMBER', go to state 8
+With 'IDENT', go to state 9
+With 'STRING', go to state 10
+With 'VAR', go to state 11
+
+=============================
+STATE NUMBER: 20
+=============================
+[6] Expr --> . Atom
+	Preceding states: {20}
+[7] Expr --> . BinExpr
+	Preceding states: {20}
+[8] Atom --> . 'NUMBER'
+	Preceding states: {20}
+[9] Atom --> . 'IDENT'
+	Preceding states: {20}
+[10] Atom --> . 'STRING'
+	Preceding states: {20}
+[11] Atom --> . 'VAR'
+	Preceding states: {20}
+[12] BinExpr --> . Expr 'PLUS' Expr
+	Preceding states: {20}
+[13] BinExpr --> . Expr 'TIMES' Expr
+	Preceding states: {20}
+[14] BinExpr --> . Expr 'AND' Expr
+	Preceding states: {20}
+[15] BinExpr --> . Expr 'OR' Expr
+	Preceding states: {20}
+[16] BinExpr --> . Expr PartialRelationalExpr
+	Preceding states: {20}
+[19] PartialRelationalExpr --> 'GREATER' . Expr
+	Preceding states: {5, 21, 22, 23, 24, 25, 26, 27}
+	Follow set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+-----------------------------
+With Expr, go to state 21
+With Atom, go to state 6
+With BinExpr, go to state 7
+With 'NUMBER', go to state 8
+With 'IDENT', go to state 9
+With 'STRING', go to state 10
+With 'VAR', go to state 11
+
+=============================
+STATE NUMBER: 21
+=============================
+This state has conflicts:
+
+Resolved   R/S conflict: choosing R19	over S16, 	on input 'OR'
+Resolved   R/S conflict: choosing R19	over S15, 	on input 'AND'
+Resolved   S/R conflict: choosing S13	over R19, 	on input 'PLUS'
+Resolved   S/R conflict: choosing S14	over R19, 	on input 'TIMES'
+Unresolved S/R conflict: choosing S18	over R19, 	on input 'SMALLER'
+Unresolved S/R conflict: choosing S19	over R19, 	on input 'EQUAL'
+Resolved   E/S conflict: choosing E	over S20, 	on input 'GREATER'
+-----------------------------
+[12] BinExpr --> Expr . 'PLUS' Expr
+	Preceding states: {20}
+[13] BinExpr --> Expr . 'TIMES' Expr
+	Preceding states: {20}
+[14] BinExpr --> Expr . 'AND' Expr
+	Preceding states: {20}
+[15] BinExpr --> Expr . 'OR' Expr
+	Preceding states: {20}
+[16] BinExpr --> Expr . PartialRelationalExpr
+	Preceding states: {20}
+	Follow set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+[17] PartialRelationalExpr --> . 'SMALLER' Expr
+	Preceding states: {21}
+[18] PartialRelationalExpr --> . 'EQUAL' Expr
+	Preceding states: {21}
+[19] PartialRelationalExpr --> . 'GREATER' Expr
+	Preceding states: {21}
+[19] PartialRelationalExpr --> 'GREATER' Expr .
+	Preceding states: {5, 21, 22, 23, 24, 25, 26, 27}
+	Lookahead set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+-----------------------------
+With 'PLUS', go to state 13
+With 'TIMES', go to state 14
+With 'AND', go to state 15
+With 'OR', go to state 16
+With PartialRelationalExpr, go to state 17
+With 'SMALLER', go to state 18
+With 'EQUAL', go to state 19
+With 'GREATER', go to state 20
+
+=============================
+STATE NUMBER: 22
+=============================
+This state has conflicts:
+
+Resolved   R/S conflict: choosing R18	over S16, 	on input 'OR'
+Resolved   R/S conflict: choosing R18	over S15, 	on input 'AND'
+Resolved   S/R conflict: choosing S13	over R18, 	on input 'PLUS'
+Resolved   S/R conflict: choosing S14	over R18, 	on input 'TIMES'
+Unresolved S/R conflict: choosing S18	over R18, 	on input 'SMALLER'
+Resolved   E/S conflict: choosing E	over S19, 	on input 'EQUAL'
+Unresolved S/R conflict: choosing S20	over R18, 	on input 'GREATER'
+-----------------------------
+[12] BinExpr --> Expr . 'PLUS' Expr
+	Preceding states: {19}
+[13] BinExpr --> Expr . 'TIMES' Expr
+	Preceding states: {19}
+[14] BinExpr --> Expr . 'AND' Expr
+	Preceding states: {19}
+[15] BinExpr --> Expr . 'OR' Expr
+	Preceding states: {19}
+[16] BinExpr --> Expr . PartialRelationalExpr
+	Preceding states: {19}
+	Follow set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+[17] PartialRelationalExpr --> . 'SMALLER' Expr
+	Preceding states: {22}
+[18] PartialRelationalExpr --> . 'EQUAL' Expr
+	Preceding states: {22}
+[18] PartialRelationalExpr --> 'EQUAL' Expr .
+	Preceding states: {5, 21, 22, 23, 24, 25, 26, 27}
+	Lookahead set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+[19] PartialRelationalExpr --> . 'GREATER' Expr
+	Preceding states: {22}
+-----------------------------
+With 'PLUS', go to state 13
+With 'TIMES', go to state 14
+With 'AND', go to state 15
+With 'OR', go to state 16
+With PartialRelationalExpr, go to state 17
+With 'SMALLER', go to state 18
+With 'EQUAL', go to state 19
+With 'GREATER', go to state 20
+
+=============================
+STATE NUMBER: 23
+=============================
+This state has conflicts:
+
+Resolved   R/S conflict: choosing R17	over S16, 	on input 'OR'
+Resolved   R/S conflict: choosing R17	over S15, 	on input 'AND'
+Resolved   S/R conflict: choosing S13	over R17, 	on input 'PLUS'
+Resolved   S/R conflict: choosing S14	over R17, 	on input 'TIMES'
+Resolved   E/S conflict: choosing E	over S18, 	on input 'SMALLER'
+Unresolved S/R conflict: choosing S19	over R17, 	on input 'EQUAL'
+Unresolved S/R conflict: choosing S20	over R17, 	on input 'GREATER'
+-----------------------------
+[12] BinExpr --> Expr . 'PLUS' Expr
+	Preceding states: {18}
+[13] BinExpr --> Expr . 'TIMES' Expr
+	Preceding states: {18}
+[14] BinExpr --> Expr . 'AND' Expr
+	Preceding states: {18}
+[15] BinExpr --> Expr . 'OR' Expr
+	Preceding states: {18}
+[16] BinExpr --> Expr . PartialRelationalExpr
+	Preceding states: {18}
+	Follow set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+[17] PartialRelationalExpr --> . 'SMALLER' Expr
+	Preceding states: {23}
+[17] PartialRelationalExpr --> 'SMALLER' Expr .
+	Preceding states: {5, 21, 22, 23, 24, 25, 26, 27}
+	Lookahead set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+[18] PartialRelationalExpr --> . 'EQUAL' Expr
+	Preceding states: {23}
+[19] PartialRelationalExpr --> . 'GREATER' Expr
+	Preceding states: {23}
+-----------------------------
+With 'PLUS', go to state 13
+With 'TIMES', go to state 14
+With 'AND', go to state 15
+With 'OR', go to state 16
+With PartialRelationalExpr, go to state 17
+With 'SMALLER', go to state 18
+With 'EQUAL', go to state 19
+With 'GREATER', go to state 20
+
+=============================
+STATE NUMBER: 24
+=============================
+This state has conflicts:
+
+Resolved   R/S conflict: choosing R15	over S16, 	on input 'OR'
+Resolved   S/R conflict: choosing S15	over R15, 	on input 'AND'
+Resolved   S/R conflict: choosing S13	over R15, 	on input 'PLUS'
+Resolved   S/R conflict: choosing S14	over R15, 	on input 'TIMES'
+Resolved   S/R conflict: choosing S18	over R15, 	on input 'SMALLER'
+Resolved   S/R conflict: choosing S19	over R15, 	on input 'EQUAL'
+Resolved   S/R conflict: choosing S20	over R15, 	on input 'GREATER'
+-----------------------------
+[12] BinExpr --> Expr . 'PLUS' Expr
+	Preceding states: {16}
+[13] BinExpr --> Expr . 'TIMES' Expr
+	Preceding states: {16}
+[14] BinExpr --> Expr . 'AND' Expr
+	Preceding states: {16}
+[15] BinExpr --> Expr . 'OR' Expr
+	Preceding states: {16}
+[15] BinExpr --> Expr 'OR' Expr .
+	Preceding states: {4, 13, 14, 15, 16, 18, 19, 20}
+	Lookahead set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+[16] BinExpr --> Expr . PartialRelationalExpr
+	Preceding states: {16}
+	Follow set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+[17] PartialRelationalExpr --> . 'SMALLER' Expr
+	Preceding states: {24}
+[18] PartialRelationalExpr --> . 'EQUAL' Expr
+	Preceding states: {24}
+[19] PartialRelationalExpr --> . 'GREATER' Expr
+	Preceding states: {24}
+-----------------------------
+With 'PLUS', go to state 13
+With 'TIMES', go to state 14
+With 'AND', go to state 15
+With 'OR', go to state 16
+With PartialRelationalExpr, go to state 17
+With 'SMALLER', go to state 18
+With 'EQUAL', go to state 19
+With 'GREATER', go to state 20
+
+=============================
+STATE NUMBER: 25
+=============================
+This state has conflicts:
+
+Resolved   R/S conflict: choosing R14	over S15, 	on input 'AND'
+Resolved   S/R conflict: choosing S13	over R14, 	on input 'PLUS'
+Resolved   S/R conflict: choosing S14	over R14, 	on input 'TIMES'
+Resolved   R/S conflict: choosing R14	over S16, 	on input 'OR'
+Resolved   S/R conflict: choosing S18	over R14, 	on input 'SMALLER'
+Resolved   S/R conflict: choosing S19	over R14, 	on input 'EQUAL'
+Resolved   S/R conflict: choosing S20	over R14, 	on input 'GREATER'
+-----------------------------
+[12] BinExpr --> Expr . 'PLUS' Expr
+	Preceding states: {15}
+[13] BinExpr --> Expr . 'TIMES' Expr
+	Preceding states: {15}
+[14] BinExpr --> Expr . 'AND' Expr
+	Preceding states: {15}
+[14] BinExpr --> Expr 'AND' Expr .
+	Preceding states: {4, 13, 14, 15, 16, 18, 19, 20}
+	Lookahead set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+[15] BinExpr --> Expr . 'OR' Expr
+	Preceding states: {15}
+[16] BinExpr --> Expr . PartialRelationalExpr
+	Preceding states: {15}
+	Follow set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+[17] PartialRelationalExpr --> . 'SMALLER' Expr
+	Preceding states: {25}
+[18] PartialRelationalExpr --> . 'EQUAL' Expr
+	Preceding states: {25}
+[19] PartialRelationalExpr --> . 'GREATER' Expr
+	Preceding states: {25}
+-----------------------------
+With 'PLUS', go to state 13
+With 'TIMES', go to state 14
+With 'AND', go to state 15
+With 'OR', go to state 16
+With PartialRelationalExpr, go to state 17
+With 'SMALLER', go to state 18
+With 'EQUAL', go to state 19
+With 'GREATER', go to state 20
+
+=============================
+STATE NUMBER: 26
+=============================
+This state has conflicts:
+
+Resolved   R/S conflict: choosing R13	over S13, 	on input 'PLUS'
+Resolved   R/S conflict: choosing R13	over S14, 	on input 'TIMES'
+Resolved   R/S conflict: choosing R13	over S15, 	on input 'AND'
+Resolved   R/S conflict: choosing R13	over S16, 	on input 'OR'
+Resolved   R/S conflict: choosing R13	over S18, 	on input 'SMALLER'
+Resolved   R/S conflict: choosing R13	over S19, 	on input 'EQUAL'
+Resolved   R/S conflict: choosing R13	over S20, 	on input 'GREATER'
+-----------------------------
+[12] BinExpr --> Expr . 'PLUS' Expr
+	Preceding states: {14}
+[13] BinExpr --> Expr . 'TIMES' Expr
+	Preceding states: {14}
+[13] BinExpr --> Expr 'TIMES' Expr .
+	Preceding states: {4, 13, 14, 15, 16, 18, 19, 20}
+	Lookahead set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+[14] BinExpr --> Expr . 'AND' Expr
+	Preceding states: {14}
+[15] BinExpr --> Expr . 'OR' Expr
+	Preceding states: {14}
+[16] BinExpr --> Expr . PartialRelationalExpr
+	Preceding states: {14}
+	Follow set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+[17] PartialRelationalExpr --> . 'SMALLER' Expr
+	Preceding states: {26}
+[18] PartialRelationalExpr --> . 'EQUAL' Expr
+	Preceding states: {26}
+[19] PartialRelationalExpr --> . 'GREATER' Expr
+	Preceding states: {26}
+-----------------------------
+With 'PLUS', go to state 13
+With 'TIMES', go to state 14
+With 'AND', go to state 15
+With 'OR', go to state 16
+With PartialRelationalExpr, go to state 17
+With 'SMALLER', go to state 18
+With 'EQUAL', go to state 19
+With 'GREATER', go to state 20
+
+=============================
+STATE NUMBER: 27
+=============================
+This state has conflicts:
+
+Resolved   R/S conflict: choosing R12	over S13, 	on input 'PLUS'
+Resolved   S/R conflict: choosing S14	over R12, 	on input 'TIMES'
+Resolved   R/S conflict: choosing R12	over S15, 	on input 'AND'
+Resolved   R/S conflict: choosing R12	over S16, 	on input 'OR'
+Resolved   R/S conflict: choosing R12	over S18, 	on input 'SMALLER'
+Resolved   R/S conflict: choosing R12	over S19, 	on input 'EQUAL'
+Resolved   R/S conflict: choosing R12	over S20, 	on input 'GREATER'
+-----------------------------
+[12] BinExpr --> Expr . 'PLUS' Expr
+	Preceding states: {13}
+[12] BinExpr --> Expr 'PLUS' Expr .
+	Preceding states: {4, 13, 14, 15, 16, 18, 19, 20}
+	Lookahead set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+[13] BinExpr --> Expr . 'TIMES' Expr
+	Preceding states: {13}
+[14] BinExpr --> Expr . 'AND' Expr
+	Preceding states: {13}
+[15] BinExpr --> Expr . 'OR' Expr
+	Preceding states: {13}
+[16] BinExpr --> Expr . PartialRelationalExpr
+	Preceding states: {13}
+	Follow set: {'OR', 'AND', 'SMALLER', 'EQUAL', 'GREATER', 'PLUS', 'TIMES', ';'}
+[17] PartialRelationalExpr --> . 'SMALLER' Expr
+	Preceding states: {27}
+[18] PartialRelationalExpr --> . 'EQUAL' Expr
+	Preceding states: {27}
+[19] PartialRelationalExpr --> . 'GREATER' Expr
+	Preceding states: {27}
+-----------------------------
+With 'PLUS', go to state 13
+With 'TIMES', go to state 14
+With 'AND', go to state 15
+With 'OR', go to state 16
+With PartialRelationalExpr, go to state 17
+With 'SMALLER', go to state 18
+With 'EQUAL', go to state 19
+With 'GREATER', go to state 20
+
+=============================
+STATE NUMBER: 28
+=============================
+[2] $ROOTS$ --> '$EXP_switch$' EXP .
+	Preceding states: {0}
+	Lookahead set: {'$E_O_I$'}
+-----------------------------
+!!! WARNING: unresolved conflicts: 6 shift/reduce
+*** Compressing parsing tables ... 
+***	6 rows eliminated in action table
+***	17 rows eliminated in goto table
+*** Table compression completed in 0 ms
+
+
+ACTION TABLE:
+
+	[1]	[2]	[3]	[4]	[5]	[6]	[7]	[8]	[9]	[10]	[11]	[12]	[13]	[14]	[15]
+	________________________________________________________________________________________________________________________
+[0]	 R4	 - 	 S3	 R4	 R4	 R4	 R4	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[1]	 A	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[2]	 R1	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[3]	 R4	 - 	 - 	 R4	 R4	 R4	 R4	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[4]	 R3	 - 	 - 	 S8	 S9	 S10	 S11	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[5]	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 S16	 S15	 S18	 S19	 S20	 S13	 S14	 S12
+[6]	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 R6	 R6	 R6	 R6	 R6	 R6	 R6	 R6
+[7]	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 R7	 R7	 R7	 R7	 R7	 R7	 R7	 R7
+[8]	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 R8	 R8	 R8	 R8	 R8	 R8	 R8	 R8
+[9]	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 R9	 R9	 R9	 R9	 R9	 R9	 R9	 R9
+[10]	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 R10	 R10	 R10	 R10	 R10	 R10	 R10	 R10
+[11]	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 R11	 R11	 R11	 R11	 R11	 R11	 R11	 R11
+[12]	 R5	 - 	 - 	 R5	 R5	 R5	 R5	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[13]	 - 	 - 	 - 	 S8	 S9	 S10	 S11	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[14]	 - 	 - 	 - 	 S8	 S9	 S10	 S11	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[15]	 - 	 - 	 - 	 S8	 S9	 S10	 S11	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[16]	 - 	 - 	 - 	 S8	 S9	 S10	 S11	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[17]	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 R16	 R16	 R16	 R16	 R16	 R16	 R16	 R16
+[18]	 - 	 - 	 - 	 S8	 S9	 S10	 S11	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[19]	 - 	 - 	 - 	 S8	 S9	 S10	 S11	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[20]	 - 	 - 	 - 	 S8	 S9	 S10	 S11	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[21]	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 R19	 R19	 S18	 S19	 R19	 S13	 S14	 R19
+[22]	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 R18	 R18	 S18	 R18	 S20	 S13	 S14	 R18
+[23]	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 R17	 R17	 R17	 S19	 S20	 S13	 S14	 R17
+[24]	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 R15	 S15	 S18	 S19	 S20	 S13	 S14	 R15
+[25]	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 R14	 R14	 S18	 S19	 S20	 S13	 S14	 R14
+[26]	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 R13	 R13	 R13	 R13	 R13	 R13	 R13	 R13
+[27]	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 R12	 R12	 R12	 R12	 R12	 R12	 S14	 R12
+[28]	 R2	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+
+GOTO TABLE:
+
+	[1]	[2]	[3]	[4]	[5]	[6]	[7]
+	________________________________________________________
+[0]	 1 	 2 	 4 	 - 	 - 	 - 	 - 
+[1]	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[2]	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[3]	 - 	 28 	 4 	 - 	 - 	 - 	 - 
+[4]	 - 	 - 	 - 	 5 	 6 	 7 	 - 
+[5]	 - 	 - 	 - 	 - 	 - 	 - 	 17 
+[6]	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[7]	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[8]	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[9]	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[10]	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[11]	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[12]	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[13]	 - 	 - 	 - 	 27 	 6 	 7 	 - 
+[14]	 - 	 - 	 - 	 26 	 6 	 7 	 - 
+[15]	 - 	 - 	 - 	 25 	 6 	 7 	 - 
+[16]	 - 	 - 	 - 	 24 	 6 	 7 	 - 
+[17]	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+[18]	 - 	 - 	 - 	 23 	 6 	 7 	 - 
+[19]	 - 	 - 	 - 	 22 	 6 	 7 	 - 
+[20]	 - 	 - 	 - 	 21 	 6 	 7 	 - 
+[21]	 - 	 - 	 - 	 - 	 - 	 - 	 17 
+[22]	 - 	 - 	 - 	 - 	 - 	 - 	 17 
+[23]	 - 	 - 	 - 	 - 	 - 	 - 	 17 
+[24]	 - 	 - 	 - 	 - 	 - 	 - 	 17 
+[25]	 - 	 - 	 - 	 - 	 - 	 - 	 17 
+[26]	 - 	 - 	 - 	 - 	 - 	 - 	 17 
+[27]	 - 	 - 	 - 	 - 	 - 	 - 	 17 
+[28]	 - 	 - 	 - 	 - 	 - 	 - 	 - 
+

@@ -1,0 +1,727 @@
+<HTML>
+<HEAD>
+<TITLE>
+XmlGenEx.html
+</TITLE>
+<LINK REL="STYLESHEET" TYPE="text/css" HREF="D:/hak/hlt/classes/resources/Hilite.Style.css">
+</HEAD>
+<BODY BGCOLOR="#CCCCFF" TEXT="BLACK">
+<CENTER>
+<TABLE BGCOLOR=white WIDTH=50% BORDER=5 CELLPADDING=20>
+<TR><TD ALIGN=CENTER>
+<SPAN STYLE="FONT-SIZE:XX-LARGE"><TT><B>XmlGenEx.grm</B></TT></SPAN>
+<P>
+</TD></TR>
+</TABLE>
+</CENTER>
+<PRE>
+<SPAN STYLE="COLOR:WHITE"><EM>//  FILE. . . . . /home/hak/hlt/src/hlt/language/jaccapps/xml/sources/XmlGenEx.grm
+</EM></SPAN><SPAN STYLE="COLOR:WHITE"><EM>//  EDIT BY . . . Hassan Ait-Kaci
+</EM></SPAN><SPAN STYLE="COLOR:WHITE"><EM>//  ON MACHINE. . Hp-Dv7
+</EM></SPAN><SPAN STYLE="COLOR:WHITE"><EM>//  STARTED ON. . Fri Oct 19 23:11:54 2012
+</EM></SPAN>
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  This is a small grammar that used as an example to illustrate JACC's
+  XML serialization annotation mechanism. See also the annotated JACC
+  grammar's hilited <a href="index.html">source code</a> (<i>i.e.</i>,
+  an HTML-beautified rendering of the JACC source files where this
+  comment came from.
+ 
+  <p>
+ 
+  The file <a href="../../test/test.exp"><tt>test.exp</tt></a> contains
+  a set of expressions that can be parsed and serialized. The resulting
+  XML serialization of the example expression in that file can be seen
+  in the file <a href="../../test/test.trace"><tt>test.trace</tt></a>.
+  The "pure" XML serialization of the expressions in that file can be
+  seen in the file <a href="../../test/test.xml"><tt>test.xml</tt></a>.
+ 
+  <p>
+ 
+       
+<P><TABLE>
+<TR><TD VALIGN=TOP><STRONG>Copyright:</STRONG></TD><TD>&nbsp;</TD>
+<TD>&copy; <a href="http://www.hassan-ait-kaci.net/">by the author</a>
+</TD></tr>
+<TR><TD VALIGN=TOP><STRONG>Author:</STRONG></TD><TD>&nbsp;</TD>
+<TD><a href="mahlto:hak@acm.org">Hassan A&iuml;t-Kaci</a>
+</TD></tr>
+<TR><TD VALIGN=TOP><STRONG>Version:</STRONG></TD><TD>&nbsp;</TD>
+<TD>Last modified on Tue Jan 28 13:39:08 2014 by hak
+</TD></tr>
+</TABLE>
+
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+
+<SPAN STYLE="COLOR:WHITE"><EM>/* ************************************************************************ */</EM></SPAN>
+<SPAN STYLE="COLOR:WHITE"><EM>/* ************************ PARAMETER DECLARATIONS ************************ */</EM></SPAN>
+<SPAN STYLE="COLOR:WHITE"><EM>/* ************************************************************************ */</EM></SPAN>
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  This declares the Java package for the parser generated from this grammar
+  to be <font color="blue"><tt>hlt.xml</tt></font>.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+%<SPAN STYLE="COLOR:RED"><STRONG>package</STRONG></SPAN> hlt.xml;
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  Include the ancillary java code contained in file <a
+  href="ParserCode.html">ParserCode.grm</a> for setting the generated
+  parser's parameters and showing XML serialization.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+%include <SPAN STYLE="COLOR:#4400DD">ParserCode</SPAN>.grm
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  Declare the grammar start symbol to be <tt>$EXP$</tt>.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+%start <SPAN STYLE="COLOR:GREEN">EXP</SPAN>
+
+  
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+    This declares this application XML's namespace to be <font
+    color="green"><tt>http://www.hassan-ait-kaci.net/hex</tt></font>. This
+    is just a fake URI, of course, for the sake of this example
+    ("<tt><b>hex</b></tt>" stands for "<tt><u><b>h</b></u>lt
+    <u><b>e</b></u>xample <u><b>x</b></u>ml</tt>").
+   
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+%xmlns <SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN> <SPAN STYLE="COLOR:GREEN"><EM>"http://www.hassan-ait-kaci.net/hex"</EM></SPAN>
+
+  
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+    Define the XML tree root element to be a <font
+    color="green"><tt>hex:expressions</tt></font>.
+   
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+%xmlroot <SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN> <SPAN STYLE="COLOR:GREEN"><EM>"expressions"</EM></SPAN>
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  Declare non-punctuation terminals <tt>$NUMBER$</tt>,
+  <tt>$IDENT$</tt>, and <tt>$VAR$</tt>.  <b>NB</b>: <tt>$VAR$</tt> is
+  an identifier starting with a <tt>'?'</tt> (<i>i.e.</i>, the
+  <tt>'?'</tt> is part of it, not a separate token).
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+%token <SPAN STYLE="COLOR:GREEN">NUMBER</SPAN> <SPAN STYLE="COLOR:GREEN">IDENT</SPAN> <SPAN STYLE="COLOR:GREEN">STRING</SPAN> <SPAN STYLE="COLOR:GREEN">VAR</SPAN>
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  Declare operators from lowest to highest precedence.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+%left  <SPAN STYLE="COLOR:GREEN">OR</SPAN>
+%left  <SPAN STYLE="COLOR:GREEN">AND</SPAN>
+%token <SPAN STYLE="COLOR:GREEN">SMALLER</SPAN> <SPAN STYLE="COLOR:GREEN">EQUAL</SPAN> <SPAN STYLE="COLOR:GREEN">GREATER</SPAN>
+%left  <SPAN STYLE="COLOR:GREEN">PLUS</SPAN>
+%left  <SPAN STYLE="COLOR:GREEN">TIMES</SPAN>
+
+<SPAN STYLE="COLOR:WHITE"><EM>/* ************************************************************************ */</EM></SPAN>
+<SPAN STYLE="COLOR:WHITE"><EM>/* ***** ANNOTATION SPECIFICATION FOR THE GRAMMAR'S TERMINAL SYMBOLS  ***** */</EM></SPAN>
+<SPAN STYLE="COLOR:WHITE"><EM>/* ************************************************************************ */</EM></SPAN>
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  Annotate terminal symbol <tt>$VAR$</tt> for XML serialization.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+%xmlinfo <SPAN STYLE="COLOR:GREEN">VAR</SPAN> <SPAN STYLE="COLOR:GRAY">[</SPAN> <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"variable"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>name = $value<SPAN STYLE="COLOR:GRAY">}</SPAN> <SPAN STYLE="COLOR:GRAY">]</SPAN>
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  Annotate terminal symbol <tt>$IDENT$</tt> for XML serialization.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+%xmlinfo <SPAN STYLE="COLOR:GREEN">IDENT</SPAN> <SPAN STYLE="COLOR:GRAY">[</SPAN> <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"identifier"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>name = $value<SPAN STYLE="COLOR:GRAY">}</SPAN> <SPAN STYLE="COLOR:GRAY">]</SPAN>
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  Annotate terminal symbol <tt>$STRING$</tt> for XML serialization.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+%xmlinfo <SPAN STYLE="COLOR:GREEN">STRING</SPAN> <SPAN STYLE="COLOR:GRAY">[</SPAN> <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"string"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>value = $value<SPAN STYLE="COLOR:GRAY">}</SPAN> <SPAN STYLE="COLOR:GRAY">]</SPAN>
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  Annotate terminal symbol <tt>$NUMBER$</tt> for XML serialization.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+%xmlinfo <SPAN STYLE="COLOR:GREEN">NUMBER</SPAN> <SPAN STYLE="COLOR:GRAY">[</SPAN> <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"number"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>value = $value<SPAN STYLE="COLOR:GRAY">}</SPAN> <SPAN STYLE="COLOR:GRAY">]</SPAN>
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  Annotate terminal symbol <tt>$PLUS$</tt> for XML serialization.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+%xmlinfo <SPAN STYLE="COLOR:GREEN">PLUS</SPAN> <SPAN STYLE="COLOR:GRAY">[</SPAN> <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"ArithmeticOperator"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>symbol = <SPAN STYLE="COLOR:GREEN"><EM>"+"</EM></SPAN><SPAN STYLE="COLOR:GRAY">}</SPAN> <SPAN STYLE="COLOR:GRAY">]</SPAN>
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  Annotate terminal symbol <tt>$TIMES$</tt> for XML serialization.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+%xmlinfo <SPAN STYLE="COLOR:GREEN">TIMES</SPAN> <SPAN STYLE="COLOR:GRAY">[</SPAN> <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"ArithmeticOperator"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>symbol = <SPAN STYLE="COLOR:GREEN"><EM>"*"</EM></SPAN><SPAN STYLE="COLOR:GRAY">}</SPAN> <SPAN STYLE="COLOR:GRAY">]</SPAN>
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  Annotate terminal symbol <tt>$SMALLER$</tt> for XML serialization.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+%xmlinfo <SPAN STYLE="COLOR:GREEN">SMALLER</SPAN> <SPAN STYLE="COLOR:GRAY">[</SPAN> <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"RelationalOperator"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>symbol = <SPAN STYLE="COLOR:GREEN"><EM>"&lt;"</EM></SPAN><SPAN STYLE="COLOR:GRAY">}</SPAN> <SPAN STYLE="COLOR:GRAY">]</SPAN>
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  Annotate terminal symbol <tt>$GREATER$</tt> for XML serialization.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+%xmlinfo <SPAN STYLE="COLOR:GREEN">GREATER</SPAN> <SPAN STYLE="COLOR:GRAY">[</SPAN> <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"RelationalOperator"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>symbol = <SPAN STYLE="COLOR:GREEN"><EM>"&gt;"</EM></SPAN><SPAN STYLE="COLOR:GRAY">}</SPAN> <SPAN STYLE="COLOR:GRAY">]</SPAN>
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  Annotate terminal symbol <tt>$EQUAL$</tt> for XML serialization.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+%xmlinfo <SPAN STYLE="COLOR:GREEN">EQUAL</SPAN> <SPAN STYLE="COLOR:GRAY">[</SPAN> <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"RelationalOperator"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>symbol = <SPAN STYLE="COLOR:GREEN"><EM>"="</EM></SPAN><SPAN STYLE="COLOR:GRAY">}</SPAN> <SPAN STYLE="COLOR:GRAY">]</SPAN>
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  Annotate terminal symbol <tt>$AND$</tt> for XML serialization.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+%xmlinfo <SPAN STYLE="COLOR:GREEN">AND</SPAN> <SPAN STYLE="COLOR:GRAY">[</SPAN> <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"BooleanOperator"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>symbol = <SPAN STYLE="COLOR:GREEN"><EM>"&amp;"</EM></SPAN><SPAN STYLE="COLOR:GRAY">}</SPAN> <SPAN STYLE="COLOR:GRAY">]</SPAN>
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  Annotate terminal symbol <tt>$OR$</tt> for XML serialization.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+%xmlinfo <SPAN STYLE="COLOR:GREEN">OR</SPAN> <SPAN STYLE="COLOR:GRAY">[</SPAN> <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"BooleanOperator"</EM></SPAN> <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>symbol = <SPAN STYLE="COLOR:GREEN"><EM>"|"</EM></SPAN><SPAN STYLE="COLOR:GRAY">}</SPAN> <SPAN STYLE="COLOR:GRAY">]</SPAN>
+
+%% 
+
+<SPAN STYLE="COLOR:WHITE"><EM>/* ************************************************************************ */</EM></SPAN>
+<SPAN STYLE="COLOR:WHITE"><EM>/* ******* ANNOTATED GRAMMAR RULES FOR A SIMPLE EXPRESSION LANGUAGE ******* */</EM></SPAN>
+<SPAN STYLE="COLOR:WHITE"><EM>/* ************************************************************************ */</EM></SPAN>
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  This grammar's root is the nonterminal symbol <tt>EXP</tt>.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+<SPAN STYLE="COLOR:GREEN">EXP</SPAN>
+  : <SPAN STYLE="COLOR:#4400DD">Exprs</SPAN>
+  <SPAN STYLE="COLOR:GRAY">{</SPAN>
+    <SPAN STYLE="COLOR:WHITE"><EM>// show the XML tree
+</EM></SPAN>    showXml<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>;
+    <SPAN STYLE="COLOR:WHITE"><EM>// show the CST:
+</EM></SPAN><SPAN STYLE="COLOR:WHITE"><EM>//     System.out.println("Concrete syntax tree:\n");
+</EM></SPAN><SPAN STYLE="COLOR:WHITE"><EM>//     currentNode().show(2,System.out);
+</EM></SPAN>  <SPAN STYLE="COLOR:GRAY">}</SPAN>
+  ;
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  An <tt>Exprs</tt> is a possibly empty sequence of items, each
+  consisting of an <tt>$Expr$</tt>'s followed by a <tt>'$;$'</tt>.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+<SPAN STYLE="COLOR:#4400DD">Exprs</SPAN>
+  : <SPAN STYLE="COLOR:WHITE"><EM>/* empty */</EM></SPAN>
+  | <SPAN STYLE="COLOR:#4400DD">Exprs</SPAN> <SPAN STYLE="COLOR:#4400DD">Expr</SPAN> <SPAN STYLE="COLOR:GREEN"><EM>';'</EM></SPAN>
+ ;
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  An <tt>Expr</tt> is either an <tt>$Atom$</tt> or
+  a <tt>$BinExpr$</tt>.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+<SPAN STYLE="COLOR:#4400DD">Expr</SPAN>
+  : <SPAN STYLE="COLOR:#4400DD">Atom</SPAN>
+  | <SPAN STYLE="COLOR:#4400DD">BinExpr</SPAN>
+  ;
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  An <tt>Atom</tt> is either a <tt>$NUMBER$</tt>, an <tt>$IDENT$</tt>,
+  a <tt>$STRING$</tt>, or a <tt>$VAR$</tt>.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+<SPAN STYLE="COLOR:#4400DD">Atom</SPAN>
+  : <SPAN STYLE="COLOR:GREEN">NUMBER</SPAN>
+  | <SPAN STYLE="COLOR:GREEN">IDENT</SPAN>
+  | <SPAN STYLE="COLOR:GREEN">STRING</SPAN>
+  | <SPAN STYLE="COLOR:GREEN">VAR</SPAN>
+  ;
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  A <tt>BinExpr</tt> either one of:
+  <ul>
+  <li> an <tt>$Expr$</tt> followed by a binary operator (<i>i.e.</i>,
+       one of <tt>$PLUS$</tt>, <tt>$TIMES$</tt>, <tt>$AND$</tt>, or
+       <tt>$OR$</tt>), followed by an <tt>$Expr$</tt>;
+  <li> an <tt>$Expr$</tt> followed by a <tt>$PartialRelationalExpr$</tt>.
+ </ul>
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+<SPAN STYLE="COLOR:#4400DD">BinExpr</SPAN>
+  : <SPAN STYLE="COLOR:#4400DD">Expr</SPAN> <SPAN STYLE="COLOR:GREEN">PLUS</SPAN> <SPAN STYLE="COLOR:#4400DD">Expr</SPAN>
+  
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+    A <tt>BinExpr</tt> is an <tt>$Expr$</tt> followed by the binary
+    operator <tt>$PLUS$</tt> followed by an <tt>$Expr$</tt>.
+   
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+  <SPAN STYLE="COLOR:GRAY">[</SPAN>
+    <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN>
+    <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"BinaryArithmeticExpression"</EM></SPAN>
+    <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>op = <SPAN STYLE="COLOR:#33AA33">2</SPAN>/symbol<SPAN STYLE="COLOR:GRAY">}</SPAN>
+    <SPAN STYLE="COLOR:GREEN">CH</SPAN>:<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:#33AA33">1</SPAN> <SPAN STYLE="COLOR:#33AA33">3</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>
+  <SPAN STYLE="COLOR:GRAY">]</SPAN>
+  |
+  
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+    A <tt>BinExpr</tt> is an <tt>$Expr$</tt> followed by the binary
+    operator <tt>$TIMES$</tt> followed by an <tt>$Expr$</tt>.
+   
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+    <SPAN STYLE="COLOR:#4400DD">Expr</SPAN> <SPAN STYLE="COLOR:GREEN">TIMES</SPAN> <SPAN STYLE="COLOR:#4400DD">Expr</SPAN>
+  <SPAN STYLE="COLOR:GRAY">[</SPAN>
+    <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN>
+    <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"BinaryArithmeticExpression"</EM></SPAN>
+    <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>op = <SPAN STYLE="COLOR:#33AA33">2</SPAN>/symbol<SPAN STYLE="COLOR:GRAY">}</SPAN>
+    <SPAN STYLE="COLOR:GREEN">CH</SPAN>:<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:#33AA33">1</SPAN> <SPAN STYLE="COLOR:#33AA33">3</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>
+  <SPAN STYLE="COLOR:GRAY">]</SPAN>
+  |
+  
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+    A <tt>BinExpr</tt> is an <tt>$Expr$</tt> followed by the binary
+    operator <tt>$AND$</tt> followed by an <tt>$Expr$</tt>.
+   
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+    <SPAN STYLE="COLOR:#4400DD">Expr</SPAN> <SPAN STYLE="COLOR:GREEN">AND</SPAN> <SPAN STYLE="COLOR:#4400DD">Expr</SPAN>
+  <SPAN STYLE="COLOR:GRAY">[</SPAN>
+    <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN>
+    <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"BinaryBooleanExpression"</EM></SPAN>
+    <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>op = <SPAN STYLE="COLOR:#33AA33">2</SPAN>/symbol<SPAN STYLE="COLOR:GRAY">}</SPAN>
+    <SPAN STYLE="COLOR:GREEN">CH</SPAN>:<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:#33AA33">1</SPAN> <SPAN STYLE="COLOR:#33AA33">3</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>
+  <SPAN STYLE="COLOR:GRAY">]</SPAN>
+  |
+  
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+    A <tt>BinExpr</tt> is an <tt>$Expr$</tt> followed by the binary
+    operator <tt>$OR$</tt> followed by an <tt>$Expr$</tt>.
+   
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+    <SPAN STYLE="COLOR:#4400DD">Expr</SPAN> <SPAN STYLE="COLOR:GREEN">OR</SPAN> <SPAN STYLE="COLOR:#4400DD">Expr</SPAN>
+  <SPAN STYLE="COLOR:GRAY">[</SPAN>
+    <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN>
+    <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"BinaryBooleanExpression"</EM></SPAN>
+    <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>op = <SPAN STYLE="COLOR:#33AA33">2</SPAN>/symbol<SPAN STYLE="COLOR:GRAY">}</SPAN>
+    <SPAN STYLE="COLOR:GREEN">CH</SPAN>:<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:#33AA33">1</SPAN> <SPAN STYLE="COLOR:#33AA33">3</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>
+  <SPAN STYLE="COLOR:GRAY">]</SPAN>
+  | <SPAN STYLE="COLOR:#4400DD">Expr</SPAN> <SPAN STYLE="COLOR:#4400DD">PartialRelationalExpr</SPAN>
+  
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+    A <tt>BinExpr</tt> is an <tt>$Expr$</tt> followed by a
+    <tt>$PartialRelationalExpr$</tt>.
+   
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+  <SPAN STYLE="COLOR:GRAY">[</SPAN>
+    <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN>
+    <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"BinaryRelationalExpression"</EM></SPAN>
+    <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>op = <SPAN STYLE="COLOR:#33AA33">2</SPAN>/op<SPAN STYLE="COLOR:GRAY">}</SPAN>
+    <SPAN STYLE="COLOR:GREEN">CH</SPAN>:<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:#33AA33">1</SPAN> <SPAN STYLE="COLOR:#33AA33">2</SPAN><SPAN STYLE="COLOR:GRAY">[</SPAN><SPAN STYLE="COLOR:#33AA33">1</SPAN><SPAN STYLE="COLOR:GRAY">]</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>
+  <SPAN STYLE="COLOR:GRAY">]</SPAN>
+  <SPAN STYLE="COLOR:WHITE"><EM>// Possible alternative (prefix) - if also modifying the annotation for
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>// PartialRelationalExpr accordingly:
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//   [
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//     NS:"hex"
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//     LO:"BinaryExpression"
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//     CH:(2[1] 1 2[2])
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//   ]
+</EM></SPAN>  ;
+
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  A <tt>PartialRelationalExpr</tt> consists of a relational operator
+  (<i>i.e.</i>, one of <tt>$SMALLER$</tt>, <tt>$EQUAL$</tt>, or
+  <tt>$GREATER$</tt>) followed by an <tt>$Expr$</tt>.
+ 
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+<SPAN STYLE="COLOR:#4400DD">PartialRelationalExpr</SPAN>
+<SPAN STYLE="COLOR:WHITE"><EM>//   : RelOp Expr
+</EM></SPAN>  : <SPAN STYLE="COLOR:GREEN">SMALLER</SPAN> <SPAN STYLE="COLOR:#4400DD">Expr</SPAN>
+  <SPAN STYLE="COLOR:GRAY">[</SPAN>
+    <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN>
+    <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"PartialRelationalExpression"</EM></SPAN>
+    <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>op = <SPAN STYLE="COLOR:#33AA33">1</SPAN>/symbol<SPAN STYLE="COLOR:GRAY">}</SPAN>
+    <SPAN STYLE="COLOR:GREEN">CH</SPAN>:<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:#33AA33">2</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>
+  <SPAN STYLE="COLOR:GRAY">]</SPAN>
+  | <SPAN STYLE="COLOR:GREEN">EQUAL</SPAN> <SPAN STYLE="COLOR:#4400DD">Expr</SPAN>
+  <SPAN STYLE="COLOR:GRAY">[</SPAN>
+    <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN>
+    <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"PartialRelationalExpression"</EM></SPAN>
+    <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>op = <SPAN STYLE="COLOR:#33AA33">1</SPAN>/symbol<SPAN STYLE="COLOR:GRAY">}</SPAN>
+    <SPAN STYLE="COLOR:GREEN">CH</SPAN>:<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:#33AA33">2</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>
+  <SPAN STYLE="COLOR:GRAY">]</SPAN>
+  | <SPAN STYLE="COLOR:GREEN">GREATER</SPAN> <SPAN STYLE="COLOR:#4400DD">Expr</SPAN>
+  <SPAN STYLE="COLOR:GRAY">[</SPAN>
+    <SPAN STYLE="COLOR:GREEN">NS</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"hex"</EM></SPAN>
+    <SPAN STYLE="COLOR:GREEN">LO</SPAN>:<SPAN STYLE="COLOR:GREEN"><EM>"PartialRelationalExpression"</EM></SPAN>
+    <SPAN STYLE="COLOR:GREEN">AT</SPAN>:<SPAN STYLE="COLOR:GRAY">{</SPAN>op = <SPAN STYLE="COLOR:#33AA33">1</SPAN>/symbol<SPAN STYLE="COLOR:GRAY">}</SPAN>
+    <SPAN STYLE="COLOR:GREEN">CH</SPAN>:<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:#33AA33">2</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>
+  <SPAN STYLE="COLOR:GRAY">]</SPAN>
+  <SPAN STYLE="COLOR:WHITE"><EM>// Possible alternative (prefix) - if also modifying the annotation for
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>// BinExpr accordingly:
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//   [
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//     NS:"hex"
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//     LO:"PartialRelationalExpression"
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//     CH:(1 2)
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//   ]
+</EM></SPAN>  ;
+
+  <SPAN STYLE="COLOR:WHITE"><EM>// /**
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//  * A &lt;tt&gt;BinOp&lt;/tt&gt; is one of &lt;tt&gt;$PLUS$&lt;/tt&gt;, &lt;tt&gt;$TIMES$&lt;/tt&gt;,
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//  * &lt;tt&gt;$AND$&lt;/tt&gt;, or &lt;tt&gt;$OR$&lt;/tt&gt;.
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//  */
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>// BinOp
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//   : PLUS
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//   | TIMES
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//   | AND
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//   | OR
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//   ;
+</EM></SPAN>  
+  <SPAN STYLE="COLOR:WHITE"><EM>// /**
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//  * A &lt;tt&gt;RelOp&lt;/tt&gt; is one of &lt;tt&gt;$SMALLER$&lt;/tt&gt;, &lt;tt&gt;$EQUAL$&lt;/tt&gt;,
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//  * or &lt;tt&gt;$GREATER$&lt;/tt&gt;.
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//  */
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>// RelOp
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//   : SMALLER
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//   | EQUAL
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//   | GREATER
+</EM></SPAN>  <SPAN STYLE="COLOR:WHITE"><EM>//   ;
+</EM></SPAN>  
+%%
+
+<SPAN STYLE="COLOR:WHITE"><EM>/* ************************************************************************ */</EM></SPAN>
+<SPAN STYLE="COLOR:WHITE"><EM>/* ********************* END OF GRAMMAR XmlGenEx.grm ********************** */</EM></SPAN>
+<SPAN STYLE="COLOR:WHITE"><EM>/* ************************************************************************ */</EM></SPAN>
+
+
+</PRE>
+<P>
+<HR>
+<P ALIGN="RIGHT"><SPAN STYLE="COLOR:#F07070"><EM>
+This file was generated on Mon Mar 26 09:39:42 CEST 2018 from file <SPAN STYLE="COLOR:BROWN"><KBD>XmlGenEx.grm</KBD></SPAN><BR>by the <SPAN STYLE="COLOR:BROWN"><KBD>hlt.language.tools.Hilite</KBD></SPAN> Java tool written by <A HREF="mailto:hak@acm.org">Hassan A&iuml;t-Kaci</A></EM></SPAN>
+<P>
+<HR>
+</BODY>
+</HTML>

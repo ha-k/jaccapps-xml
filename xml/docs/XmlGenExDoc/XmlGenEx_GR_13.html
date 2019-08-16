@@ -1,0 +1,86 @@
+<HTML>
+<HEAD>
+<LINK REL="STYLESHEET" TYPE="text/css" HREF="style.css">
+<TITLE>
+XmlGenExDoc/XmlGenEx_GR_13.html
+</TITLE>
+</HEAD>
+<BODY CLASS="MAIN"  LINK="BLUE" VLINK="BLUE" ALINK="PURPLE">
+<H2 ALIGN="CENTER">Rule <TT><I>BinExpr_2</I></TT></H2>
+<CENTER>
+<TABLE BGCOLOR="WHITE" BORDER="5" CELLPADDING="20">
+<TR><TD>
+<TABLE BGCOLOR="WHITE" CELLPADDING="6">
+<TR>
+<TD ALIGN="RIGHT" VALIGN="TOP">
+<A CLASS="SYMBOL" HREF="XmlGenEx_NT_6.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><I>BinExpr</I></TT></A>
+</TD>
+<TD ALIGN="RIGHT" VALIGN="TOP">
+<IMG SRC="images/arrows/misc/rarrow.gif">
+</TD>
+<TD VALIGN="TOP">
+<A CLASS="SYMBOL" HREF="XmlGenEx_NT_4.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><I>Expr</I></TT></A>&nbsp;<A CLASS="SYMBOL" HREF="XmlGenEx_TT_14.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><B>TIMES</B></TT></A>&nbsp;<A CLASS="SYMBOL" HREF="XmlGenEx_NT_4.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><I>Expr</I></TT></A>&nbsp;</TD>
+</TR>
+</TABLE>
+</TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<CENTER>
+<P><HR><P>
+<TABLE BGCOLOR="WHITE" CELLPADDING="15"><TR><TD>
+<H4 ALIGN="CENTER">XML Serialization Annotation</H4>
+This rule has the following XML serialization annotation:
+<PRE>  [
+    nsprefix	= "<SPAN STYLE="COLOR:#226688">hex</SPAN>"
+    localname	= "<SPAN STYLE="COLOR:BLUE">BinaryArithmeticExpression</SPAN>"
+    attributes	= { 
+                    <SPAN STYLE="COLOR:#EE6622">op = 2/symbol</SPAN>
+                  }
+    children	= ( 
+                    <SPAN STYLE="COLOR:BROWN">1</SPAN>
+                    <SPAN STYLE="COLOR:BROWN">3</SPAN>
+                  )
+  ]
+</PRE>
+This means that a <A CLASS="SYMBOL" HREF="XmlGenEx_NT_6.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><I>BinExpr</I></TT></A> derived through this rule will be serialized thus:
+<P><CENTER>
+<BLOCKQUOTE><TABLE BORDER BGCOLOR="#EEEEEE" CELLPADDING="20"><TR><TD>
+<PRE STYLE="line-height: 150%">
+<B>&lt;<SPAN STYLE="COLOR:#226688">hex</SPAN>:<SPAN STYLE="COLOR:BLUE">BinaryArithmeticExpression</SPAN> <SPAN STYLE="COLOR:#EE6622">op = <TT><I>A<SUB>0</SUB></I></TT></SPAN>&gt;</B>
+<SPAN STYLE="COLOR:BROWN"></PRE><BLOCKQUOTE STYLE="margin-top: -10pt; margin-bottom: -7pt; margin-left: 1.3em; margin-right: 0pt"><SPAN STYLE="FONT-SIZE:SMALLER"><I>XML serialization of the 1<SUP>st</SUP> RHS symbol</I></SPAN> (<A CLASS="SYMBOL" HREF="XmlGenEx_NT_4.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><I>Expr</I></TT></A>)</BLOCKQUOTE>
+<PRE STYLE="line-height: 150%">
+</PRE><BLOCKQUOTE STYLE="margin-top: -10pt; margin-bottom: -7pt; margin-left: 1.3em; margin-right: 0pt"><SPAN STYLE="FONT-SIZE:SMALLER"><I>XML serialization of the 3<SUP>rd</SUP> RHS symbol</I></SPAN> (<A CLASS="SYMBOL" HREF="XmlGenEx_NT_4.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><I>Expr</I></TT></A>)</BLOCKQUOTE>
+<PRE STYLE="line-height: 150%">
+</SPAN><B>&lt;/<SPAN STYLE="COLOR:#226688">hex</SPAN>:<SPAN STYLE="COLOR:BLUE">BinaryArithmeticExpression</SPAN>&gt;</B>
+</PRE>
+
+</TD></TR></TABLE></BLOCKQUOTE>
+</CENTER>
+<SPAN STYLE="FONT-SIZE:SMALLER"><B>Legend of attribute values for <TT><SPAN STYLE="COLOR:#226688">hex</SPAN>:<SPAN STYLE="COLOR:BLUE">BinaryArithmeticExpression</SPAN>:</TT></B></SPAN>
+<UL>
+
+<LI><SPAN STYLE="COLOR:#EE6622"><TT><I>A<SUB>0</SUB></I></TT></SPAN> is the value of attribute <TT>"<SPAN STYLE="COLOR:#EE6622">symbol</SPAN>"</TT> of the 2<SUP>nd</SUP> RHS symbol (<A CLASS="SYMBOL" HREF="XmlGenEx_TT_14.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><B>TIMES</B></TT></A>)
+
+
+</UL>
+
+</TD></TR></TABLE>
+</CENTER>
+<P>
+<P><HR><P>
+<H4 ALIGN="CENTER">Description</H4>
+<TABLE WIDTH="100%" BGCOLOR="WHITE" CELLPADDING="15"><TR><TD>
+
+    A <tt>BinExpr</tt> is an <tt><A CLASS="SYMBOL" HREF="XmlGenEx_NT_4.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><I>Expr</I></TT></A></tt> followed by the binary
+    operator <tt><A CLASS="SYMBOL" HREF="XmlGenEx_TT_14.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><B>TIMES</B></TT></A></tt> followed by an <tt><A CLASS="SYMBOL" HREF="XmlGenEx_NT_4.html" TARGET="MAIN" ONCLICK="opener.focus()"><TT><I>Expr</I></TT></A></tt>.
+   
+<P>
+</TD></TR></TABLE>
+<P>
+<HR>
+<SPAN STYLE="COLOR:#F07070; FONT-SIZE:XX-SMALL">
+<P ALIGN="RIGHT"><B>Copyright &copy; 2018 by <A HREF="http://www.hassan-ait-kaci.net/">Hassan A&iuml;t-Kaci</A>; All Rights Reserved.</B></SPAN>
+<P ALIGN="RIGHT"><IMG ALIGN="MIDDLE" SRC="images/hlt/hlt-logo.gif" WIDTH="90" HEIGHT="90">
+</BODY>
+</HTML>

@@ -1,0 +1,3 @@
+#!/bin/sh
+CLASSPATH="../classes;${WIN_HOME}/hlt/classes;${WIN_HOME}/hlt/classes/jdom.jar"
+java -classpath ${CLASSPATH} hlt.xml.Main $*

@@ -1,0 +1,118 @@
+<HTML>
+<HEAD>
+<TITLE>
+ParserCode.html
+</TITLE>
+<LINK REL="STYLESHEET" TYPE="text/css" HREF="D:/hak/hlt/classes/resources/Hilite.Style.css">
+</HEAD>
+<BODY BGCOLOR="#CCCCFF" TEXT="BLACK">
+<CENTER>
+<TABLE BGCOLOR=white WIDTH=50% BORDER=5 CELLPADDING=20>
+<TR><TD ALIGN=CENTER>
+<SPAN STYLE="FONT-SIZE:XX-LARGE"><TT><B>ParserCode.grm</B></TT></SPAN>
+<P>
+</TD></TR>
+</TABLE>
+</CENTER>
+<PRE>
+<SPAN STYLE="COLOR:WHITE"><EM>// FILE. . . . . /home/hak/hlt/src/hlt/language/jaccapps/xml/sources/ParserCode.grm
+</EM></SPAN><SPAN STYLE="COLOR:WHITE"><EM>// EDIT BY . . . Hassan Ait-Kaci
+</EM></SPAN><SPAN STYLE="COLOR:WHITE"><EM>// ON MACHINE. . Hp-Dv7
+</EM></SPAN><SPAN STYLE="COLOR:WHITE"><EM>// STARTED ON. . Fri Oct 19 22:55:13 2012
+</EM></SPAN>
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  This file contains ancillary code used by the Jacc grammar in <a
+  href="XmlGenEx.html"><tt>XmlGenEx.grm</tt></a>, which illustrates how
+  to use Jacc for XML generation from the syntax of a language - in
+  this case, a language of simple expressions.
+ 
+  <p>
+ 
+       
+<P><TABLE>
+<TR><TD VALIGN=TOP><STRONG>Copyright:</STRONG></TD><TD>&nbsp;</TD>
+<TD>&copy; <a href="http://www.hassan-ait-kaci.net/">by the author</a>
+</TD></tr>
+<TR><TD VALIGN=TOP><STRONG>Author:</STRONG></TD><TD>&nbsp;</TD>
+<TD><a href="mahlto:hak@acm.org">Hassan A&iuml;t-Kaci</a>
+</TD></tr>
+<TR><TD VALIGN=TOP><STRONG>Version:</STRONG></TD><TD>&nbsp;</TD>
+<TD>Last modified on Fri Oct 19 23:10:42 2012 by hak
+</TD></tr>
+</TABLE>
+
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+
+%<SPAN STYLE="COLOR:RED"><STRONG>import</STRONG></SPAN> java.io.<SPAN STYLE="COLOR:#4400DD">PrintStream</SPAN>;
+%<SPAN STYLE="COLOR:RED"><STRONG>import</STRONG></SPAN> hlt.language.tools.<SPAN STYLE="COLOR:#4400DD">Misc</SPAN>;
+
+%<SPAN STYLE="COLOR:GRAY">{</SPAN>
+  <SPAN STYLE="COLOR:BLUE"><STRONG>long</STRONG></SPAN> start;
+  <SPAN STYLE="COLOR:BLUE"><STRONG>boolean</STRONG></SPAN> quiet = <SPAN STYLE="COLOR:GREEN">true</SPAN>;
+  <SPAN STYLE="COLOR:#4400DD">PrintStream</SPAN> out = <SPAN STYLE="COLOR:#4400DD">System</SPAN>.out;
+
+  <SPAN STYLE="COLOR:BLUE"><STRONG>void</STRONG></SPAN> setStart <SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>
+    <SPAN STYLE="COLOR:GRAY">{</SPAN>
+      start = <SPAN STYLE="COLOR:#4400DD">System</SPAN>.currentTimeMillis<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>;
+    <SPAN STYLE="COLOR:GRAY">}</SPAN>
+
+  <SPAN STYLE="COLOR:BLUE"><STRONG>void</STRONG></SPAN> setQuiet <SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:BLUE"><STRONG>boolean</STRONG></SPAN> flag<SPAN STYLE="COLOR:GRAY">)</SPAN>
+    <SPAN STYLE="COLOR:GRAY">{</SPAN>
+      quiet = flag;
+    <SPAN STYLE="COLOR:GRAY">}</SPAN>
+
+  <SPAN STYLE="COLOR:BLUE"><STRONG>void</STRONG></SPAN> setOutputStream <SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:#4400DD">PrintStream</SPAN> stream<SPAN STYLE="COLOR:GRAY">)</SPAN>
+    <SPAN STYLE="COLOR:GRAY">{</SPAN>
+      out = stream;
+    <SPAN STYLE="COLOR:GRAY">}</SPAN>
+
+  <SPAN STYLE="COLOR:WHITE"><EM>/*
+   * A function to show what happened.
+   */</EM></SPAN>
+  <SPAN STYLE="COLOR:BLUE"><STRONG>void</STRONG></SPAN> showXml <SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>
+    <SPAN STYLE="COLOR:GRAY">{</SPAN>
+      out.println<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:GREEN"><EM>"*** Total parsing time = "</EM></SPAN>
+                 +<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:#4400DD">System</SPAN>.currentTimeMillis<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>-start<SPAN STYLE="COLOR:GRAY">)</SPAN>
+                 +<SPAN STYLE="COLOR:GREEN"><EM>" ms"</EM></SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>;
+
+      <SPAN STYLE="COLOR:BROWN"><STRONG>if</STRONG></SPAN> <SPAN STYLE="COLOR:GRAY">(</SPAN>!quiet<SPAN STYLE="COLOR:GRAY">)</SPAN>
+        <SPAN STYLE="COLOR:GRAY">{</SPAN>
+          errorManager<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>.tallyErrors<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>;
+          <SPAN STYLE="COLOR:BROWN"><STRONG>if</STRONG></SPAN> <SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:#4400DD">Misc</SPAN>.askYesNo<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:GREEN"><EM>"*** Do you want to see the XML serialization"</EM></SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>
+            <SPAN STYLE="COLOR:GRAY">{</SPAN>
+              out.println<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>;
+	      <SPAN STYLE="COLOR:BROWN"><STRONG>try</STRONG></SPAN>
+		<SPAN STYLE="COLOR:GRAY">{</SPAN>
+		  writeXml<SPAN STYLE="COLOR:GRAY">(</SPAN>currentNode<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>,<SPAN STYLE="COLOR:#4400DD">System</SPAN>.out<SPAN STYLE="COLOR:GRAY">)</SPAN>;
+		<SPAN STYLE="COLOR:GRAY">}</SPAN>
+	      <SPAN STYLE="COLOR:BROWN"><STRONG>catch</STRONG></SPAN> <SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:#4400DD">Exception</SPAN> e<SPAN STYLE="COLOR:GRAY">)</SPAN>
+		<SPAN STYLE="COLOR:GRAY">{</SPAN>
+		  e.printStackTrace<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>;
+		<SPAN STYLE="COLOR:GRAY">}</SPAN>	      
+<SPAN STYLE="COLOR:WHITE"><EM>//               currentNode().display();
+</EM></SPAN>              out.println<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>;
+            <SPAN STYLE="COLOR:GRAY">}</SPAN>
+        <SPAN STYLE="COLOR:GRAY">}</SPAN>
+    <SPAN STYLE="COLOR:GRAY">}</SPAN>
+%<SPAN STYLE="COLOR:GRAY">}</SPAN>
+
+</PRE>
+<P>
+<HR>
+<P ALIGN="RIGHT"><SPAN STYLE="COLOR:#F07070"><EM>
+This file was generated on Mon Mar 26 09:39:42 CEST 2018 from file <SPAN STYLE="COLOR:BROWN"><KBD>ParserCode.grm</KBD></SPAN><BR>by the <SPAN STYLE="COLOR:BROWN"><KBD>hlt.language.tools.Hilite</KBD></SPAN> Java tool written by <A HREF="mailto:hak@acm.org">Hassan A&iuml;t-Kaci</A></EM></SPAN>
+<P>
+<HR>
+</BODY>
+</HTML>

@@ -1,0 +1,166 @@
+<HTML>
+<HEAD>
+<TITLE>
+Lexicon.html
+</TITLE>
+<LINK REL="STYLESHEET" TYPE="text/css" HREF="D:/hak/hlt/classes/resources/Hilite.Style.css">
+</HEAD>
+<BODY BGCOLOR="#CCCCFF" TEXT="BLACK">
+<CENTER>
+<TABLE BGCOLOR=white WIDTH=50% BORDER=5 CELLPADDING=20>
+<TR><TD ALIGN=CENTER>
+<SPAN STYLE="FONT-SIZE:XX-LARGE"><TT><B>Lexicon.java</B></TT></SPAN>
+<P>
+</TD></TR>
+</TABLE>
+</CENTER>
+<PRE>
+<SPAN STYLE="COLOR:WHITE"><EM>// FILE. . . . . /home/hak/hlt/src/hlt/language/jaccapps/xml/sources/Lexicon.java
+</EM></SPAN><SPAN STYLE="COLOR:WHITE"><EM>// EDIT BY . . . Hassan Ait-Kaci
+</EM></SPAN><SPAN STYLE="COLOR:WHITE"><EM>// ON MACHINE. . Hp-Dv7
+</EM></SPAN><SPAN STYLE="COLOR:WHITE"><EM>// STARTED ON. . Fri Oct 19 22:55:13 2012
+</EM></SPAN>
+
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+  This is a simple lexicon class defining lexical units for the
+  tokenizer in <a href="Tokenizer.html"><tt>Tokenizer.java</tt></a>,
+  for this Jacc application, which is meant to illustrate XML
+  generation for language of simple expressions.
+ 
+  <p>
+ 
+       
+<P><TABLE>
+<TR><TD VALIGN=TOP><STRONG>Copyright:</STRONG></TD><TD>&nbsp;</TD>
+<TD>&copy; <a href="http://www.hassan-ait-kaci.net/">by the author</a>
+</TD></tr>
+<TR><TD VALIGN=TOP><STRONG>Author:</STRONG></TD><TD>&nbsp;</TD>
+<TD><a href="mahlto:hak@acm.org">Hassan A&iuml;t-Kaci</a>
+</TD></tr>
+<TR><TD VALIGN=TOP><STRONG>Version:</STRONG></TD><TD>&nbsp;</TD>
+<TD>Last modified on Fri Oct 19 23:00:24 2012 by hak
+</TD></tr>
+</TABLE>
+
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+
+<SPAN STYLE="COLOR:RED"><STRONG>package</STRONG></SPAN> hlt.xml;
+
+<SPAN STYLE="COLOR:RED"><STRONG>import</STRONG></SPAN> java.util.<SPAN STYLE="COLOR:#4400DD">HashMap</SPAN>;
+<SPAN STYLE="COLOR:RED"><STRONG>import</STRONG></SPAN> java.util.<SPAN STYLE="COLOR:#4400DD">HashSet</SPAN>;
+
+<SPAN STYLE="COLOR:RED"><STRONG>class</STRONG></SPAN> <SPAN STYLE="COLOR:#4400DD">Lexicon</SPAN>
+<SPAN STYLE="COLOR:GRAY">{</SPAN>
+  
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+    Returns <tt>true</tt> iff the specified string starts with a
+    question mark, and every other character is alphanumeric or
+    underscore.
+   
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+  <SPAN STYLE="COLOR:MAGENTA"><STRONG>public</STRONG></SPAN> <SPAN STYLE="COLOR:MAGENTA"><STRONG>final</STRONG></SPAN> <SPAN STYLE="COLOR:MAGENTA"><STRONG>static</STRONG></SPAN> <SPAN STYLE="COLOR:BLUE"><STRONG>boolean</STRONG></SPAN> isVariable <SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:#4400DD">String</SPAN> s<SPAN STYLE="COLOR:GRAY">)</SPAN>
+    <SPAN STYLE="COLOR:GRAY">{</SPAN>
+      <SPAN STYLE="COLOR:BLUE"><STRONG>char</STRONG></SPAN> c = s.charAt<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:#33AA33">0</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>;
+
+      <SPAN STYLE="COLOR:BROWN"><STRONG>if</STRONG></SPAN> <SPAN STYLE="COLOR:GRAY">(</SPAN>c != <SPAN STYLE="COLOR:GREEN"><EM>'?'</EM></SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>
+        <SPAN STYLE="COLOR:BROWN"><STRONG>return</STRONG></SPAN> <SPAN STYLE="COLOR:GREEN">false</SPAN>;
+
+      <SPAN STYLE="COLOR:BROWN"><STRONG>for</STRONG></SPAN> <SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:BLUE"><STRONG>int</STRONG></SPAN> i=<SPAN STYLE="COLOR:#33AA33">1</SPAN>; i&lt;s.length<SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>; i++<SPAN STYLE="COLOR:GRAY">)</SPAN>
+          <SPAN STYLE="COLOR:GRAY">{</SPAN>
+            c = s.charAt<SPAN STYLE="COLOR:GRAY">(</SPAN>i<SPAN STYLE="COLOR:GRAY">)</SPAN>;
+            <SPAN STYLE="COLOR:BROWN"><STRONG>if</STRONG></SPAN> <SPAN STYLE="COLOR:GRAY">(</SPAN>!<SPAN STYLE="COLOR:#4400DD">Character</SPAN>.isLetterOrDigit<SPAN STYLE="COLOR:GRAY">(</SPAN>c<SPAN STYLE="COLOR:GRAY">)</SPAN> &amp;&amp; c != <SPAN STYLE="COLOR:GREEN"><EM>'_'</EM></SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>
+              <SPAN STYLE="COLOR:BROWN"><STRONG>return</STRONG></SPAN> <SPAN STYLE="COLOR:GREEN">false</SPAN>;
+          <SPAN STYLE="COLOR:GRAY">}</SPAN>
+
+      <SPAN STYLE="COLOR:BROWN"><STRONG>return</STRONG></SPAN> <SPAN STYLE="COLOR:GREEN">true</SPAN>;
+    <SPAN STYLE="COLOR:GRAY">}</SPAN>       
+
+  
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+    The following is a store for RCL reserved words.
+   
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+  <SPAN STYLE="COLOR:MAGENTA"><STRONG>public</STRONG></SPAN> <SPAN STYLE="COLOR:MAGENTA"><STRONG>static</STRONG></SPAN> <SPAN STYLE="COLOR:MAGENTA"><STRONG>final</STRONG></SPAN> <SPAN STYLE="COLOR:#4400DD">HashSet</SPAN> reserved = <SPAN STYLE="COLOR:BROWN"><STRONG>new</STRONG></SPAN> <SPAN STYLE="COLOR:#4400DD">HashSet</SPAN><SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:GRAY">)</SPAN>;
+
+  
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+    Returns <tt>true</tt> iff the specified string is a reserved
+    RCL word.
+   
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+  <SPAN STYLE="COLOR:MAGENTA"><STRONG>public</STRONG></SPAN> <SPAN STYLE="COLOR:MAGENTA"><STRONG>final</STRONG></SPAN> <SPAN STYLE="COLOR:MAGENTA"><STRONG>static</STRONG></SPAN> <SPAN STYLE="COLOR:BLUE"><STRONG>boolean</STRONG></SPAN> isReserved <SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:#4400DD">String</SPAN> word<SPAN STYLE="COLOR:GRAY">)</SPAN>
+    <SPAN STYLE="COLOR:GRAY">{</SPAN>
+      <SPAN STYLE="COLOR:BROWN"><STRONG>return</STRONG></SPAN> reserved.contains<SPAN STYLE="COLOR:GRAY">(</SPAN>word<SPAN STYLE="COLOR:GRAY">)</SPAN>;
+    <SPAN STYLE="COLOR:GRAY">}</SPAN>
+
+  
+</PRE>
+<HR>
+<CENTER>
+<TABLE BGCOLOR="WHITE" WIDTH=90% BORDER=1 CELLPADDING=10>
+<TR><TD><SPAN STYLE="COLOR:BLACK">
+
+    Declares the specified string as a reserved word.
+   
+</SPAN></TD></TR>
+</TABLE>
+</CENTER>
+<P>
+<PRE>
+
+  <SPAN STYLE="COLOR:MAGENTA"><STRONG>static</STRONG></SPAN> <SPAN STYLE="COLOR:MAGENTA"><STRONG>final</STRONG></SPAN> <SPAN STYLE="COLOR:BLUE"><STRONG>void</STRONG></SPAN> reserved <SPAN STYLE="COLOR:GRAY">(</SPAN><SPAN STYLE="COLOR:#4400DD">String</SPAN> word<SPAN STYLE="COLOR:GRAY">)</SPAN>
+    <SPAN STYLE="COLOR:GRAY">{</SPAN>
+      reserved.add<SPAN STYLE="COLOR:GRAY">(</SPAN>word<SPAN STYLE="COLOR:GRAY">)</SPAN>;
+    <SPAN STYLE="COLOR:GRAY">}</SPAN>
+
+<SPAN STYLE="COLOR:GRAY">}</SPAN>
+
+</PRE>
+<P>
+<HR>
+<P ALIGN="RIGHT"><SPAN STYLE="COLOR:#F07070"><EM>
+This file was generated on Mon Mar 26 09:39:42 CEST 2018 from file <SPAN STYLE="COLOR:BROWN"><KBD>Lexicon.java</KBD></SPAN><BR>by the <SPAN STYLE="COLOR:BROWN"><KBD>hlt.language.tools.Hilite</KBD></SPAN> Java tool written by <A HREF="mailto:hak@acm.org">Hassan A&iuml;t-Kaci</A></EM></SPAN>
+<P>
+<HR>
+</BODY>
+</HTML>
